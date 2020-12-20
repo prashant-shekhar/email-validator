@@ -10,7 +10,8 @@ This Repository checks for validity of an email
     ```
 2. Install dependencies
 
-    ```
+   ```
+    bundle install
     yarn install
     ```
 3. Database configurations

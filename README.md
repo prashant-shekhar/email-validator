@@ -23,6 +23,11 @@ This Repository checks for validity of an email
     ```
     rails db:create
     ```
+5. Run Migrations
+
+    ```
+    rails db:migrate
+    ```
 5. Start contributing
 
     ```

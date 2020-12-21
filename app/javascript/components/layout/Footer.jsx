@@ -15,9 +15,9 @@ export default () => (
                     <h4 className="mt-lg-0 mt-sm-3">Social</h4>
                     <ul className="m-0 p-0">
                         <li>
-                            <Link to="https://github.com/nikhilbhatt/EmailValidator">
+                            <a href="https://github.com/nikhilbhatt/EmailValidator">
                                 GitHub<i className="fab fa-github"></i>
-                            </Link>
+                            </a>
                         </li>
                     </ul>
                 </div>

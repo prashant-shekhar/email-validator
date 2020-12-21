@@ -13,13 +13,13 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: hello
+  username: <%= Rails.application.secrets[:username]%>
+  password: <%= Rails.application.secrets[:password]%>
   socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
-  database: EmailValidator_development
+  database:  <%= Rails.application.secrets[:database]%>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

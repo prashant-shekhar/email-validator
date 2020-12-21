@@ -34,3 +34,18 @@
 .footer .copyright p {
     border-top: 1px solid rgba(255, 255, 255, .1);
 }
+
+.email-header {
+    background: #152f4f;
+    color: white;
+}
+
+.scrollable{
+    overflow-y: auto;
+    max-height: 450px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}

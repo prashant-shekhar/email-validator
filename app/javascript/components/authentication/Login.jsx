@@ -42,11 +42,11 @@ export default class Login extends Component {
         let errors={}
         
         if(this.state.email==''){
-            errors['email']="Email can't be empty"
+            errors['email']="Email field in required"
             isValid=false
         }
         if(this.state.password==''){
-            errors['password']=" can't be empty"
+            errors['password']="Password field is required"
             isValid=false
         }
 

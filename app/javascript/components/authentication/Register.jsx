@@ -20,7 +20,6 @@ export default class Register extends Component {
     handleSubmit(e){
         e.preventDefault();
         if(this.validate()){  
-            // console.log('workign');
                 fetch('URL',{
                     method:"POST",
                     headers:{
@@ -43,20 +42,20 @@ export default class Register extends Component {
         let errors={}
 
         if(this.state.name==''){
-            errors['name']="Name can't be empty"
+            errors['name']="Name field is required"
             isValid=false
         }
 
         if(this.state.username==''){
-            errors['username']="Username can't be empty"
+            errors['username']="Username field is required"
             isValid=false
         }
         if(this.state.email==''){
-            errors['email']="Email can't be empty"
+            errors['email']="Email field is required"
             isValid=false
         }
         if(this.state.password==''){
-            errors['password']=" can't be empty"
+            errors['password']="Password field is required"
             isValid=false
         }
 

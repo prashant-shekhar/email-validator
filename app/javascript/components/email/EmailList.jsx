@@ -30,7 +30,9 @@ class EmailList extends Component {
                 </li>
             </ul>
         ));
-        const noEmail = <h6 className="m-3">No email yet. Why not create one</h6>;
+        const noEmail = (
+            <h6 className="m-3">No email yet. Why not create one</h6>
+        );
         return (
             <div className="card shadow mb-5 bg-white rounded-lg">
                 <div className="card-header bg-primary text-white">

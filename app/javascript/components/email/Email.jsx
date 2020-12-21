@@ -1,20 +1,20 @@
-import React from 'react'
-import EmailCreate from './EmailCreate'
-import EmailList from './EmailList'
+import React from "react";
+import EmailCreate from "./EmailCreate";
+import EmailList from "./EmailList";
 
-const Email = () =>{
+const Email = () => {
     return (
         <div className="container">
             <div className="row">
                 <div className="col-sm">
-                    <EmailList/>
+                    <EmailList />
                 </div>
                 <div className="col-sm">
-                    <EmailCreate/>
+                    <EmailCreate />
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Email
+export default Email;

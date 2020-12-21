@@ -14,7 +14,7 @@ class EmailCreate extends Component {
     handleSubmit(e) {
         e.preventDefault();
         if (this.validate()) {
-            console.log(this.state)
+            console.log(this.state);
             fetch("URL", {
                 method: "POST",
                 headers: {
@@ -25,14 +25,13 @@ class EmailCreate extends Component {
             }).then((result) => {
                 result.json().then((resp) => {});
             });
-            
         }
     }
 
     validate() {
         let isValid = true;
         let errors = {};
-        var email = this.state.email
+        var email = this.state.email;
         if (email == "") {
             errors["email"] = "Email field in required";
             isValid = false;

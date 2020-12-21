@@ -8,7 +8,7 @@ export default () => (
                 <div className="col-lg-5 col-xs-12 about-company">
                     <h2>Email Validator</h2>
                     <p className="pr-5 text-white-50">
-                        Validate Your Email List Quickly and Easily.{" "}
+                        Validate Your Email List Quickly and Easily.
                     </p>
                 </div>
                 <div className="col-lg-3 col-xs-12 links">

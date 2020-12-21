@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "../components/Home";
-import Login from "../components/Authentication/Login";
-import Register from "../components/Authentication/Register";
+import Login from "../components/authentication/Login";
+import Register from "../components/authentication/Register";
 
 export default (
   <Router>

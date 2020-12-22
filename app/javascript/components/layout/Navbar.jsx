@@ -1,8 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 const renderList = () => {
-    const isLoggedIn = true;
+    const isLoggedIn = localStorage.getItem("jwt");
+    const history = useHistory();
+    useEffect(() => {
+        if (isLoggedIn) {
+            history.push("/dashboard");
+        } else {
+            history.push("/");
+        }
+    }, []);
     if (isLoggedIn) {
         return [
             <li key="nav-about" className="nav-item">

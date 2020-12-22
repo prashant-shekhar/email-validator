@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 export default class Login extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: "",
             password: "",
@@ -28,12 +27,11 @@ export default class Login extends Component {
                 body: JSON.stringify(this.state),
             }).then((result) => {
                 result.json().then((resp) => {
-                    console.log(resp);
                     if (resp.error) {
                         swal("Oops!", resp.message, "warning");
                     } else {
                             localStorage.setItem(
-                                "token",
+                                "jwt",
                                 JSON.stringify(resp.jwt)
                             );
                             localStorage.setItem(
@@ -45,7 +43,7 @@ export default class Login extends Component {
                                 "you made it! Sign in successfull",
                                 "success"
                             );
-                            
+                            this.props.history.push("/login"); 
                     }
                 });
             });
@@ -115,20 +113,6 @@ export default class Login extends Component {
                                 <div className="text-danger">
                                     {this.state.errors.password}
                                 </div>
-                            </div>
-                            <div className="form-check mb-2">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="autoSizingCheck"
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor="autoSizingCheck"
-                                >
-                                    {" "}
-                                    Remember me
-                                </label>
                             </div>
                             <input
                                 type="submit"

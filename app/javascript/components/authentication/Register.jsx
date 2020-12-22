@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
 import { Link } from "react-router-dom";
-
+console
 export default class Register extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             name:'',
             username:'',
@@ -30,7 +30,6 @@ export default class Register extends Component {
                     },
                     body:JSON.stringify(this.state)
                 }).then((result)=>{
-                    console.log(result)
                     if(result.ok){
                         result.json().then((resp)=>{
                             swal(
@@ -38,6 +37,7 @@ export default class Register extends Component {
                                 "You made it! Registration successfull, please login now",
                                 "success"
                             );
+                            this.props.history.push("/login"); 
                         })
                     } else{
                         result.json().then((resp)=>{

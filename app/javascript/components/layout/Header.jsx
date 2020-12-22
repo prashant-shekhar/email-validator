@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 export default () => (
     <nav className="navbar navbar-dark navbar-expand-md footer">
         <Link to="/home" className="navbar-brand logo">
-            Logo
+            Email Validator
         </Link>
         <button
             className="navbar-toggler"

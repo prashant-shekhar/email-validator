@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
 import { Link } from "react-router-dom";
-
+console
 export default class Register extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             name:'',
             username:'',
@@ -19,19 +19,36 @@ export default class Register extends Component {
  
     handleSubmit(e){
         e.preventDefault();
+        const token = document.querySelector("[name=csrf-token]").content;
         if(this.validate()){  
-                fetch('URL',{
+                fetch('/api/v1/users',{
                     method:"POST",
                     headers:{
+                        "X-CSRF-Token": token,
                         "Accept":"application/json",
                         "Content-type":"application/json"
                     },
                     body:JSON.stringify(this.state)
                 }).then((result)=>{
-                    result.json().then((resp)=>{
-                        console.log(resp.token)
-                        //Save Token to storage and Login user
-                    })
+                    if(result.ok){
+                        result.json().then((resp)=>{
+                            swal(
+                                "Good job!",
+                                "You made it! Registration successfull, please login now",
+                                "success"
+                            );
+                            this.props.history.push("/login"); 
+                        })
+                    } else{
+                        result.json().then((resp)=>{
+                            swal(
+                                "Oops",
+                                resp.errors[0],
+                                "warning"
+                            );
+                        })
+                    }
+                    
                 })
         }
         

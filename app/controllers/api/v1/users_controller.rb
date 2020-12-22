@@ -16,9 +16,9 @@ class Api::V1::UsersController < ApplicationController
     if user && user.password== params[:password]
       payload= {user_id: user.id}
       token =encode_token(payload)
-      render json: {user: user,jwt: token, success: "Welocome back, #{user.name}"}
+      render json: {user: user,jwt: token, error: false, message: "Welocome back, #{user.name}"}
     else
-      render json: { failure: "Log in Failed! invalid email or password"}
+      render json: { error: true, message: "Log in Failed! invalid email or password"}
     end 
   end
 

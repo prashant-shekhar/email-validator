@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
+  
   def create
     user= User.create(user_params);
     if user.valid?
@@ -13,7 +14,7 @@ class Api::V1::UsersController < ApplicationController
 
   def login
     user= User.find_by(email: params[:email])
-    if user && user.password== params[:password]
+    if user && User.authenticate(user.password,params[:password])
       payload= {user_id: user.id}
       token =encode_token(payload)
       render json: {user: user,jwt: token, success: "Welocome back, #{user.name}"}

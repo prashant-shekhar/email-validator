@@ -23,7 +23,7 @@ class EmailList extends Component {
                 console.log(error);
             });
     }
-
+    
 
 
     render() {

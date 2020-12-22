@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const renderList = () => {
-    const isLoggedIn = false;
+    const isLoggedIn = true;
     if (isLoggedIn) {
         return [
             <li key="nav-about" className="nav-item">

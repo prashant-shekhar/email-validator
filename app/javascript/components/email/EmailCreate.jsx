@@ -14,16 +14,25 @@ class EmailCreate extends Component {
     handleSubmit(e) {
         e.preventDefault();
         if (this.validate()) {
-            console.log(this.state);
-            fetch("URL", {
+            const token = document.querySelector('[name=csrf-token]').content
+            const url = "/api/v1/emails";
+            const data = {
+                email: this.state.email,
+                userid: '1'
+            }
+            fetch(url, {
                 method: "POST",
                 headers: {
+                    'X-CSRF-Token': token,
                     Accept: "application/json",
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify(this.state),
+                body: JSON.stringify(data),
             }).then((result) => {
-                result.json().then((resp) => {});
+                console.log(result)
+                result.json().then((resp) => {
+                    console.log(resp)
+                });
             });
         }
     }

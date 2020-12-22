@@ -25,6 +25,7 @@ class EmailList extends Component {
     }
 
 
+
     render() {
         const { emails } = this.state;
         const allEmails = emails.map((emailEle, index) => (

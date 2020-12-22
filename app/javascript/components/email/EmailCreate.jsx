@@ -6,25 +6,49 @@ class EmailCreate extends Component {
         this.state = {
             email: "",
             errors: {},
+            isLoading: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validate = this.validate.bind(this);
+        this.setState = this.setState.bind(this);
     }
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({ isLoading: true });
         if (this.validate()) {
-            console.log(this.state);
-            fetch("URL", {
+            const token = document.querySelector("[name=csrf-token]").content;
+            const url = "/api/v1/emails";
+            const data = {
+                email: this.state.email,
+                userid: "1",
+            };
+            fetch(url, {
                 method: "POST",
                 headers: {
+                    "X-CSRF-Token": token,
                     Accept: "application/json",
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify(this.state),
+                body: JSON.stringify(data),
             }).then((result) => {
-                result.json().then((resp) => {});
+                result.json().then((resp) => {
+                    resp
+                        ? swal(
+                              "Good job!",
+                              "Email is validated successfully",
+                              "success"
+                          )
+                        : swal(
+                              "Oops!",
+                              "You must try with another email address",
+                              "warning"
+                          );
+                    this.setState({ email: "", errors: {}, isLoading: false });
+                });
             });
+        } else {
+            this.setState({ isLoading: false });
         }
     }
 
@@ -67,6 +91,7 @@ class EmailCreate extends Component {
                                     onChange={(e) =>
                                         this.setState({ email: e.target.value })
                                     }
+                                    value={this.state.email}
                                     placeholder="Email Address"
                                     required
                                 />
@@ -77,9 +102,21 @@ class EmailCreate extends Component {
                             <div className="col-4 mb-2">
                                 <button
                                     type="submit"
-                                    className="btn btn-primary"
+                                    className="btn btn-primary w-100"
+                                    disabled={this.state.isLoading}
                                 >
-                                    Validate
+                                    {!this.state.isLoading ? (
+                                        <span>validate</span>
+                                    ) : (
+                                        <div
+                                            className="spinner-border text-light spinner-border-sm"
+                                            role="status"
+                                        >
+                                            <span className="sr-only">
+                                                Loading...
+                                            </span>
+                                        </div>
+                                    )}
                                 </button>
                             </div>
                         </div>

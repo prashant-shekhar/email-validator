@@ -11,7 +11,7 @@ class Api::V1::EmailsController < ApplicationController
     if @res.result.success
       @email= Email.new
       @email.email=params[:email]
-      @email.user_id=params[:id]
+      @email.user_id=params[:userid]
       @email.save
     end
     render json: @res.result.success

@@ -12,7 +12,7 @@ class User < ApplicationRecord
     end
 
     def self.authenticate(encrypted_password, password)
-        if password == BCrypt::Password.new(encrypted_password)
+        if BCrypt::Password.new(encrypted_password) == password
           true
         else
           false

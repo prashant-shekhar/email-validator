@@ -12,8 +12,8 @@ class User < ApplicationRecord
         self.password = BCrypt::Password.create(password)
     end
 
-    def self.authenticate(password, param_password)
-        if BCrypt::Password.new(password) == param_password
+    def self.authenticate(encrypted_password, password)
+        if password == BCrypt::Password.new(encrypted_password)
           true
         else
           false

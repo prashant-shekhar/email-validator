@@ -9,34 +9,32 @@ class EmailList extends Component {
     }
 
     componentDidMount() {
-        const url = `/api/v1/emails/index?userid=${'1'}`;
+        const url = `/api/v1/emails/index?userid=${"1"}`;
         fetch(url)
             .then((result) => {
-                if(result.ok){
-                result.json().then((response) => {
-                    this.setState({emails: response})
-                });
-                }else{
-
+                if (result.ok) {
+                    result.json().then((response) => {
+                        this.setState({ emails: response });
+                    });
                 }
             })
-            .catch((error)=>{
-                console.log(error)
-            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     render() {
         const { emails } = this.state;
         const allEmails = emails.map((emailEle, index) => (
-                <li key={index} className="list-group-item">
-                    {emailEle.email}
-                </li>
+            <li key={index} className="list-group-item">
+                {emailEle.email}
+            </li>
         ));
         const noEmail = (
             <h6 className="m-3">No email yet. Why not create one</h6>
         );
         return (
-            <div className="card shadow mb-5 bg-white rounded-lg">
+            <div className="card shadow mb-5 bg-white rounded-lg scrollable">
                 <div className="card-header bg-primary text-white">
                     Validated Email List
                 </div>

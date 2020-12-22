@@ -9,7 +9,8 @@ class EmailList extends Component {
     }
 
     componentDidMount() {
-        const url = `/api/v1/emails/index?userid=${"1"}`;
+        const user = JSON.parse(localStorage.getItem("user"));
+        const url = `/api/v1/emails/index?userid=${user.id}`;
         fetch(url)
             .then((result) => {
                 if (result.ok) {

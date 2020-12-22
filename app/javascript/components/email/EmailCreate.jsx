@@ -15,13 +15,14 @@ class EmailCreate extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        const user = JSON.parse(localStorage.getItem("user"));
         this.setState({ isLoading: true });
         if (this.validate()) {
             const token = document.querySelector("[name=csrf-token]").content;
             const url = "/api/v1/emails";
             const data = {
                 email: this.state.email,
-                userid: "1",
+                userid: user.id,
             };
             fetch(url, {
                 method: "POST",

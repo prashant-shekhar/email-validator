@@ -24,9 +24,6 @@ class EmailList extends Component {
             });
     }
 
-    componentWillUnmount(){
-        this.componentDidMount()
-    }
 
     render() {
         const { emails } = this.state;

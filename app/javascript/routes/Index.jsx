@@ -18,6 +18,7 @@ export default (
                         <Route path="/login" exact component={Login} />
                         <Route path="/register" exact component={Register} />
                         <Route path="/dashboard" exact component={Email} />
+                        <Route component={Home} />
                     </Switch>
                 </div>
             </section>

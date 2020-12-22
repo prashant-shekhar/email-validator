@@ -6,6 +6,7 @@ class EmailCreate extends Component {
         this.state = {
             email: "",
             errors: {},
+            isLoading: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validate = this.validate.bind(this);

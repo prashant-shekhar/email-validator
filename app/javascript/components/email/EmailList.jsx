@@ -9,26 +9,28 @@ class EmailList extends Component {
     }
 
     componentDidMount() {
-        const url = "/api/v1/emails/index";
+        const url = `/api/v1/emails/index?userid=${'1'}`;
         fetch(url)
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
+            .then((result) => {
+                if(result.ok){
+                result.json().then((response) => {
+                    this.setState({emails: response})
+                });
+                }else{
+
                 }
-                throw new Error("Network response was not ok.");
             })
-            .then((response) => this.setState({ recipes: response }))
-            .catch(() => this.props.history.push("/"));
+            .catch((error)=>{
+                console.log(error)
+            })
     }
 
     render() {
         const { emails } = this.state;
-        const allEmails = emails.map((email, index) => (
-            <ul className="list-group list-group-flush scrollable">
+        const allEmails = emails.map((emailEle, index) => (
                 <li key={index} className="list-group-item">
-                    {email}
+                    {emailEle.email}
                 </li>
-            </ul>
         ));
         const noEmail = (
             <h6 className="m-3">No email yet. Why not create one</h6>
@@ -38,7 +40,9 @@ class EmailList extends Component {
                 <div className="card-header bg-primary text-white">
                     Validated Email List
                 </div>
-                {emails.length > 0 ? allEmails : noEmail}
+                <ul className="list-group list-group-flush scrollable">
+                    {emails.length > 0 ? allEmails : noEmail}
+                </ul>
             </div>
         );
     }

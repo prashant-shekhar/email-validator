@@ -23,6 +23,7 @@ class EmailList extends Component {
             });
     }
 
+
     render() {
         const { emails } = this.state;
         const allEmails = emails.map((emailEle, index) => (
@@ -36,7 +37,8 @@ class EmailList extends Component {
         return (
             <div className="card shadow mb-5 bg-white rounded-lg scrollable">
                 <div className="card-header bg-primary text-white">
-                    Validated Email List
+                    <span className="badge badge-light mr-2">{emails.length}</span>
+                    <span>Validated Email List</span>
                 </div>
                 <ul className="list-group list-group-flush scrollable">
                     {emails.length > 0 ? allEmails : noEmail}

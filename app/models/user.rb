@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-    # has_secure_password
     before_save :encrypt_password
     validates :name, presence: true
     validates :username, uniqueness: true, presence: true

@@ -42,8 +42,9 @@ export default class Login extends Component {
                                 "Good job!",
                                 "you made it! Sign in successfull",
                                 "success"
-                            );
-                            this.props.history.push("/login"); 
+                            ).then(()=>{
+                                this.setState({redirect:true})
+                            });
                     }
                 });
             });
@@ -69,8 +70,12 @@ export default class Login extends Component {
         return isValid;
     }
     render() {
+        const auth=localStorage.getItem('jwt');
         return (
             <div className="Login container mt-5">
+                {
+                    auth?<Redirect to="dashboard"></Redirect>:null
+                }
                 <div className="card col-7 mx-auto my-auto">
                     <h2 className="card-title text-center mt-4">
                         Email Validator Login

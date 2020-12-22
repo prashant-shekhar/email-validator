@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 
 export default () => (
     <nav className="navbar navbar-dark navbar-expand-md footer">
-        <Link to="/home" className="navbar-brand logo">
+        <Link to="/" className="navbar-brand logo">
             Email Validator
         </Link>
         <button

@@ -13,20 +13,16 @@ const renderList = () => {
     }, []);
     if (isLoggedIn) {
         return [
-            <li key="nav-about" className="nav-item">
-                <Link className="nav-link" to="/about">
-                    About
-                </Link>
-            </li>,
-            <li key="nav-profile" className="nav-item">
-                <Link className="nav-link" to="/profile">
-                    Profile
-                </Link>
-            </li>,
             <li key="nav-logout" className="nav-item">
-                <Link className="nav-link" to="/logout">
-                    Logout
-                </Link>
+                <button
+                        onClick={() => {
+                            localStorage.clear();
+                            history.push("/login");
+                        }}
+                        className="btn waves-light bg-white logout-btn"
+                    >
+                        Logout
+                </button>
             </li>,
         ];
     } else {

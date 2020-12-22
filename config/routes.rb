@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   end
   namespace :api do
     namespace :v1 do
-      get 'users/index'
+        resource :users, only: [:create]
+        post "users/login", to: "users#login"
     end
   end
   root 'home#index'

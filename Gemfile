@@ -28,6 +28,9 @@ gem 'jbuilder', '~> 2.7'
 #Truemail Gem to validate Email
 gem 'truemail'
 
+#for password encryption
+gem 'jwt'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 

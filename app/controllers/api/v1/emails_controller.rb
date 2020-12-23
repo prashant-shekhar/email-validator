@@ -8,9 +8,7 @@ class Api::V1::EmailsController < ApplicationController
   def create
     @res = Truemail.validate(params[:email],with: :smtp)
     if @res.result.success
-      @email= Email.new
-      @email.email=params[:email]
-      @email.user_id=params[:userid]
+      @email= Email.new(email: params[:email],user_id: params[:userid] )
       @email.save
     end
     render json: @res.result.success

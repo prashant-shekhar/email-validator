@@ -4,7 +4,7 @@ import userReducer from "./User/user.reducer";
 
 const rootReducer = combineReducers({
     user: userReducer,
-    email: emailReducer
+    email: emailReducer,
 });
 
 export default rootReducer;

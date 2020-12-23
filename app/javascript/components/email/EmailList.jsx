@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {fetchEmailSuccess} from '../../redux/Email/email.actions'
-
+import { fetchEmailSuccess } from "../../redux/Email/email.actions";
 
 class EmailList extends Component {
     constructor(props) {
@@ -9,13 +8,13 @@ class EmailList extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem("user"))
+        const user = JSON.parse(localStorage.getItem("user"));
         const url = `/api/v1/emails/index?userid=${user.id}`;
         fetch(url)
             .then((result) => {
                 if (result.ok) {
                     result.json().then((response) => {
-                        this.props.fetchEmailSuccess(response)
+                        this.props.fetchEmailSuccess(response);
                     });
                 }
             })
@@ -25,8 +24,7 @@ class EmailList extends Component {
     }
 
     render() {
-        const  emails  = this.props.emails;
-        console.log(emails)
+        const emails = this.props.emails;
         const allEmails = emails.map((emailEle, index) => (
             <li key={index} className="list-group-item">
                 {emailEle.email}

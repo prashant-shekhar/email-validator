@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {createEmailSuccess} from '../../redux/Email/email.actions'
+import { createEmailSuccess } from "../../redux/Email/email.actions";
 
 class EmailCreate extends Component {
     constructor() {
@@ -17,7 +17,7 @@ class EmailCreate extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const user = JSON.parse(localStorage.getItem("user"))
+        const user = JSON.parse(localStorage.getItem("user"));
         this.setState({ isLoading: true });
         if (this.validate()) {
             const token = document.querySelector("[name=csrf-token]").content;
@@ -47,10 +47,9 @@ class EmailCreate extends Component {
                               "You must try with another email address",
                               "warning"
                           );
-                    const email = this.state.email
-                    this.props.createEmailSuccess({email})
+                    const email = this.state.email;
+                    this.props.createEmailSuccess({ email });
                     this.setState({ email: "", errors: {}, isLoading: false });
-                    console.log(resp)
                 });
             });
         } else {
@@ -146,4 +145,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmailCreate);
-

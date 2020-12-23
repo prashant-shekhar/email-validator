@@ -1,7 +1,9 @@
 import { LOGIN, LOGOUT } from "./user.types";
 
 const INITIAL_STATE = {
-    token: false,
+    token: null,
+    user: null,
+    isLoggedIn: false
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -9,12 +11,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
         case LOGIN:
             return {
                 ...state,
-                token: true,
+                token: action.payload.token,
+                user: action.payload.user,
+                isLoggedIn: action.payload.isLoggedIn
             };
         case LOGOUT:
             return {
                 ...state,
-                token: false,
+                token: null,
+                user: null,
+                isLoggedIn: false
             };
         default:
             return state;

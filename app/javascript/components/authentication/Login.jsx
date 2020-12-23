@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { loginUser, logoutUser } from "../../redux/User/user.actions";
+import { loginUser} from "../../redux/User/user.actions";
+
 
 class Login extends Component {
     constructor(props) {
@@ -39,7 +40,8 @@ class Login extends Component {
                             "you made it! Sign in successfull",
                             "success"
                         );
-                        window.location.reload(false);
+                        const payload={token: resp.jwt, user: resp.user, isLoggedIn: true}
+                        this.props.loginUser(payload)
                     }
                 });
             });
@@ -125,6 +127,7 @@ class Login extends Component {
                         </form>
                     </div>
                 </div>
+                {this.props.isLoggedIn?<Redirect to="/dashboard"></Redirect>:null}
             </div>
         );
     }
@@ -133,13 +136,14 @@ class Login extends Component {
 const mapStateToProps = (state) => {
     return {
         token: state.user.token,
+        user: state.user.user,
+        isLoggedIn: state.user.isLoggedIn
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginUser: () => dispatch(loginUser()),
-        logoutUser: () => dispatch(logoutUser()),
+        loginUser: payload => dispatch(loginUser(payload)),
     };
 };
 

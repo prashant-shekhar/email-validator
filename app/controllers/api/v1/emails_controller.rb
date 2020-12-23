@@ -6,7 +6,7 @@ class Api::V1::EmailsController < ApplicationController
   end
 
   def create
-    @res = Truemail.validate(params[:email])
+    @res = Truemail.validate(params[:email],with: :smtp)
     if @res.result.success
       @email= Email.new
       @email.email=params[:email]

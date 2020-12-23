@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      get 'emails/index'
-      resources :emails, only: [:create]
+      resources :emails, only: [:create,:index]
     end
   end
   namespace :api do

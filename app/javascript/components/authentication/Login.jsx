@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginUser, logoutUser } from "../../redux/User/user.actions";
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,20 +32,14 @@ export default class Login extends Component {
                     if (resp.error) {
                         swal("Oops!", resp.message, "warning");
                     } else {
-                            localStorage.setItem(
-                                "jwt",
-                                JSON.stringify(resp.jwt)
-                            );
-                            localStorage.setItem(
-                                "user",
-                                JSON.stringify(resp.user)
-                            );
-                            swal(
-                                "Good job!",
-                                "you made it! Sign in successfull",
-                                "success"
-                            )
-                            window.location.reload(false);
+                        localStorage.setItem("jwt", JSON.stringify(resp.jwt));
+                        localStorage.setItem("user", JSON.stringify(resp.user));
+                        swal(
+                            "Good job!",
+                            "you made it! Sign in successfull",
+                            "success"
+                        );
+                        window.location.reload(false);
                     }
                 });
             });
@@ -69,7 +65,7 @@ export default class Login extends Component {
         return isValid;
     }
     render() {
-        const auth=localStorage.getItem('jwt');
+        const auth = localStorage.getItem("jwt");
         return (
             <div className="Login container mt-5">
                 <div className="card col-7 mx-auto my-auto">
@@ -133,3 +129,18 @@ export default class Login extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.user.token,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginUser: () => dispatch(loginUser()),
+        logoutUser: () => dispatch(logoutUser()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

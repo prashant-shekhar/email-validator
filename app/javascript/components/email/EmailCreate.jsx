@@ -46,7 +46,7 @@ class EmailCreate extends Component {
                               "warning"
                           );
                     this.setState({ email: "", errors: {}, isLoading: false });
-                    window.location.reload(false)
+                    window.location.reload(false);
                 });
             });
         } else {

@@ -23,8 +23,6 @@ class EmailList extends Component {
                 console.log(error);
             });
     }
-    
-
 
     render() {
         const { emails } = this.state;
@@ -39,7 +37,9 @@ class EmailList extends Component {
         return (
             <div className="card shadow mb-5 bg-white rounded-lg scrollable">
                 <div className="card-header bg-primary text-white">
-                    <span className="badge badge-light mr-2">{emails.length}</span>
+                    <span className="badge badge-light mr-2">
+                        {emails.length}
+                    </span>
                     <span>Validated Email List</span>
                 </div>
                 <ul className="list-group list-group-flush scrollable">

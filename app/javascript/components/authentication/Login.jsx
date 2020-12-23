@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { loginUser} from "../../redux/User/user.actions";
-
+import { loginUser } from "../../redux/User/user.actions";
 
 class Login extends Component {
     constructor(props) {
@@ -40,8 +39,12 @@ class Login extends Component {
                             "you made it! Sign in successfull",
                             "success"
                         );
-                        const payload={token: resp.jwt, user: resp.user, isLoggedIn: true}
-                        this.props.loginUser(payload)
+                        const payload = {
+                            token: resp.jwt,
+                            user: resp.user,
+                            isLoggedIn: true,
+                        };
+                        this.props.loginUser(payload);
                     }
                 });
             });
@@ -67,7 +70,6 @@ class Login extends Component {
         return isValid;
     }
     render() {
-        const auth = localStorage.getItem("jwt");
         return (
             <div className="Login container mt-5">
                 <div className="card col-7 mx-auto my-auto">
@@ -127,7 +129,9 @@ class Login extends Component {
                         </form>
                     </div>
                 </div>
-                {this.props.isLoggedIn?<Redirect to="/dashboard"></Redirect>:null}
+                {this.props.isLoggedIn ? (
+                    <Redirect to="/dashboard"></Redirect>
+                ) : null}
             </div>
         );
     }
@@ -137,13 +141,13 @@ const mapStateToProps = (state) => {
     return {
         token: state.user.token,
         user: state.user.user,
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginUser: payload => dispatch(loginUser(payload)),
+        loginUser: (payload) => dispatch(loginUser(payload)),
     };
 };
 

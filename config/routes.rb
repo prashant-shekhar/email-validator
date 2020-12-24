@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      get 'emails/index'
-      resources :emails, only: [:create]
+      resources :emails, only: [:create,:index]
     end
   end
   namespace :api do
@@ -13,5 +12,4 @@ Rails.application.routes.draw do
   end
   root 'home#index'
   get '/*path' => 'home#index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -11,8 +11,7 @@
 #
 default: &default
   adapter: mysql2
-  encoding: utf8
-  collation: utf8_general_ci
+  encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: <%= Rails.application.secrets[:username]%>
   password: <%= Rails.application.secrets[:password]%>
@@ -28,9 +27,8 @@ development:
 test:
   <<: *default
   database: EmailValidator_test
-  collation: utf8_general_ci
   encoding: utf8
-  
+  collation: utf8_general_ci
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

@@ -25,6 +25,7 @@ const Navbar = () => {
         if (state.isLoggedIn) {
             return [
                 <li key="nav-logout" className="nav-item">
+
                     <button
                         onClick={() => {
                             localStorage.clear();
@@ -35,7 +36,16 @@ const Navbar = () => {
                     >
                         Logout
                     </button>
+
                 </li>,
+                <li key="nav-home" className="nav-item ml-2">
+                    
+                <button
+                    className="btn waves-light bg-white logout-btn"
+                >
+                    {state.user.name}
+                </button>
+            </li>,
             ];
         } else {
             return [

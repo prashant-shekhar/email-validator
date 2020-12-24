@@ -36,19 +36,21 @@ class EmailCreate extends Component {
                 body: JSON.stringify(data),
             }).then((result) => {
                 result.json().then((resp) => {
-                    resp
-                        ? swal(
-                              "Good job!",
-                              "Email is validated successfully",
-                              "success"
-                          )
-                        : swal(
-                              "Oops!",
-                              "You must try with another email address",
-                              "warning"
-                          );
-                    const email = this.state.email;
-                    this.props.createEmailSuccess({ email });
+                    if (resp) {
+                        swal(
+                            "Good job!",
+                            "Email is validated successfully",
+                            "success"
+                        );
+                        const email = this.state.email;
+                        this.props.createEmailSuccess({ email });
+                    } else {
+                        swal(
+                            "Oops!",
+                            "You must try with another email address",
+                            "warning"
+                        );
+                    }
                     this.setState({ email: "", errors: {}, isLoading: false });
                 });
             });

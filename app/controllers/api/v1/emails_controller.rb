@@ -11,6 +11,6 @@ class Api::V1::EmailsController < ApplicationController
       email= Email.new(email: params[:email],user_id: params[:userid] )
       email.save
     end
-    render json: res.result
+    render json: res.result.success
   end
 end

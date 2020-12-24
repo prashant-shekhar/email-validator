@@ -48,7 +48,7 @@ class EmailCreate extends Component {
                         swal(
                             "Oops!",
                             "You must try with another email address",
-                            "warning"
+                            "error"
                         );
                     }
                     this.setState({ email: "", errors: {}, isLoading: false });

@@ -30,13 +30,13 @@ class Login extends Component {
             }).then((result) => {
                 result.json().then((resp) => {
                     if (resp.error) {
-                        swal("Oops!", resp.message, "warning");
+                        swal("Oops!", resp.message, "error");
                     } else {
                         localStorage.setItem("jwt", JSON.stringify(resp.jwt));
                         localStorage.setItem("user", JSON.stringify(resp.user));
                         swal(
                             "Good job!",
-                            "you made it! Sign in successfull",
+                            "You made it! Sign in successfull",
                             "success"
                         );
                         const payload = {

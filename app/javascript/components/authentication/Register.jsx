@@ -40,7 +40,7 @@ export default class Register extends Component {
                     });
                 } else {
                     result.json().then((resp) => {
-                        swal("Oops", resp.errors[0], "warning");
+                        swal("Oops", resp.errors[0], "error");
                     });
                 }
             });

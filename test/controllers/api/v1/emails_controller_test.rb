@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::EmailsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @email= emails(:valid)
+    @email= emails :valid
   end
 
   test "should get index" do

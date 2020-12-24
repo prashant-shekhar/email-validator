@@ -39,7 +39,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "email and username should be unique" do
     copy_user = @user.dup
-    assert copy_user.valid?
+    assert_not copy_user.valid?
     assert_not_nil copy_user.errors[:username], 'no uniqueness validation error for username present'
     assert_not_nil copy_user.errors[:email], 'no uniqueness validation error for email present'
   end

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchEmailSuccess } from "../../redux/Email/email.actions";
 
 class EmailList extends Component {
     constructor(props) {
-        super();
-        this.state = {
-            emails: [],
-        };
+        super(props);
     }
 
     componentDidMount() {
@@ -15,7 +14,7 @@ class EmailList extends Component {
             .then((result) => {
                 if (result.ok) {
                     result.json().then((response) => {
-                        this.setState({ emails: response });
+                        this.props.fetchEmailSuccess(response);
                     });
                 }
             })
@@ -23,11 +22,9 @@ class EmailList extends Component {
                 console.log(error);
             });
     }
-    
-
 
     render() {
-        const { emails } = this.state;
+        const emails = this.props.emails;
         const allEmails = emails.map((emailEle, index) => (
             <li key={index} className="list-group-item">
                 {emailEle.email}
@@ -39,7 +36,9 @@ class EmailList extends Component {
         return (
             <div className="card shadow mb-5 bg-white rounded-lg scrollable">
                 <div className="card-header bg-primary text-white">
-                    <span className="badge badge-light mr-2">{emails.length}</span>
+                    <span className="badge badge-light mr-2">
+                        {emails.length}
+                    </span>
                     <span>Validated Email List</span>
                 </div>
                 <ul className="list-group list-group-flush scrollable">
@@ -50,4 +49,16 @@ class EmailList extends Component {
     }
 }
 
-export default EmailList;
+const mapStateToProps = (state) => {
+    return {
+        emails: state.email.emails,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchEmailSuccess: (payload) => dispatch(fetchEmailSuccess(payload)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmailList);

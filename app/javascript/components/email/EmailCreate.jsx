@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { createEmailSuccess } from "../../redux/Email/email.actions";
 
 class EmailCreate extends Component {
     constructor() {
@@ -45,8 +47,9 @@ class EmailCreate extends Component {
                               "You must try with another email address",
                               "warning"
                           );
+                    const email = this.state.email;
+                    this.props.createEmailSuccess({ email });
                     this.setState({ email: "", errors: {}, isLoading: false });
-                    window.location.reload(false)
                 });
             });
         } else {
@@ -129,4 +132,16 @@ class EmailCreate extends Component {
     }
 }
 
-export default EmailCreate;
+const mapStateToProps = (state) => {
+    return {
+        emails: state.email.emails,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createEmailSuccess: (payload) => dispatch(createEmailSuccess(payload)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmailCreate);

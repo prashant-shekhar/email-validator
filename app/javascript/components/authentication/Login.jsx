@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginUser } from "../../redux/User/user.actions";
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,20 +32,19 @@ export default class Login extends Component {
                     if (resp.error) {
                         swal("Oops!", resp.message, "warning");
                     } else {
-                            localStorage.setItem(
-                                "jwt",
-                                JSON.stringify(resp.jwt)
-                            );
-                            localStorage.setItem(
-                                "user",
-                                JSON.stringify(resp.user)
-                            );
-                            swal(
-                                "Good job!",
-                                "you made it! Sign in successfull",
-                                "success"
-                            )
-                            window.location.reload(false);
+                        localStorage.setItem("jwt", JSON.stringify(resp.jwt));
+                        localStorage.setItem("user", JSON.stringify(resp.user));
+                        swal(
+                            "Good job!",
+                            "you made it! Sign in successfull",
+                            "success"
+                        );
+                        const payload = {
+                            token: resp.jwt,
+                            user: resp.user,
+                            isLoggedIn: true,
+                        };
+                        this.props.loginUser(payload);
                     }
                 });
             });
@@ -69,7 +70,6 @@ export default class Login extends Component {
         return isValid;
     }
     render() {
-        const auth=localStorage.getItem('jwt');
         return (
             <div className="Login container mt-5">
                 <div className="card col-7 mx-auto my-auto">
@@ -129,7 +129,26 @@ export default class Login extends Component {
                         </form>
                     </div>
                 </div>
+                {this.props.isLoggedIn ? (
+                    <Redirect to="/dashboard"></Redirect>
+                ) : null}
             </div>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.user.token,
+        user: state.user.user,
+        isLoggedIn: state.user.isLoggedIn,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginUser: (payload) => dispatch(loginUser(payload)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

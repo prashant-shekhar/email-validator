@@ -3,7 +3,7 @@ cache:
   - bundler
   - yarn
 services:
-  - postgresql
+  - mysql2
 before_install:
   - nvm install --lts
 before_script:

@@ -1,9 +1,5 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  email: MyString
-  user: one
-
-two:
-  email: MyString
-  user: two
+valid:
+  email: manish.sharma@elitmus.com
+  user: valid

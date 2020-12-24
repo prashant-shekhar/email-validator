@@ -28,8 +28,9 @@ development:
 test:
   <<: *default
   database: EmailValidator_test
-  encoding: utf8
   collation: utf8_general_ci
+  encoding: utf8
+  
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

@@ -9,10 +9,10 @@ class Api::V1::UsersController < ApplicationController
         usr= user.slice("id","name","email","username")
         render json: { user: usr, jwt: token}
       else
-        render json: {errors: user.errors.full_messages} , status: :not_acceptable
+        render json: {errors: user.errors.full_messages}
       end
     else
-      render json: {errors: ['Invalid Email!']}, status: :not_acceptable
+      render json: {errors: ['Invalid Email!']}
     end
   end
 

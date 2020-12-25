@@ -2,8 +2,9 @@ class User < ApplicationRecord
     before_save :encrypt_password
     validates :name, presence: true
     validates :username, uniqueness: { case_sensitive: false }, presence: true
-    validates :email, uniqueness: { case_sensitive: false }, presence:true, format: { with: URI::MailTo::EMAIL_REGEXP }
-    validates :password, presence:true
+    validates :email, uniqueness: { case_sensitive: false }, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+    validates :password, presence: true
+    validates :has_role, presence: true
 
     has_many :emails
 
@@ -17,5 +18,9 @@ class User < ApplicationRecord
         else
           false
         end
+    end
+
+    def self.filter_users
+      self.where(has_role: 'user').select(:id, :name, :username, :email, :is_activated).all
     end
 end

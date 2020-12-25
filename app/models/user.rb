@@ -2,8 +2,10 @@ class User < ApplicationRecord
     before_save :encrypt_password
     validates :name, presence: true
     validates :username, uniqueness: { case_sensitive: false }, presence: true
-    validates :email, uniqueness: { case_sensitive: false }, presence:true, format: { with: URI::MailTo::EMAIL_REGEXP }
-    validates :password, presence:true
+    validates :email, uniqueness: { case_sensitive: false }, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+    validates :password, presence: true
+    validates :has_role, presence: true
+    validates :is_activated, presence: true
 
     has_many :emails
 

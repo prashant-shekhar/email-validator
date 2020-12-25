@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
 
   def create
-    # if Truemail.valid?(params[:email])
+    if Truemail.valid?(params[:email])
       user= User.create(user_params);
       if user.valid?
         payload = {user_id: user.id}
@@ -11,9 +11,9 @@ class Api::V1::UsersController < ApplicationController
       else
         render json: {errors: user.errors.full_messages}, status: :not_acceptable
       end
-    # else
-    #   render json: {errors: ['Invalid Email!']}, status: :not_acceptable
-    # end
+    else
+      render json: {errors: ['Invalid Email!']}, status: :not_acceptable
+    end
   end
 
   def login

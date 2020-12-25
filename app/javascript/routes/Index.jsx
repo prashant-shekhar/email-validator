@@ -6,7 +6,7 @@ import Register from "../components/authentication/Register";
 import Email from "../components/email/Index";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-
+import AdminDashboard from "../components/admin/AdminDashboard";
 export default (
     <Router>
         <Header />
@@ -18,6 +18,7 @@ export default (
                         <Route path="/login" exact component={Login} />
                         <Route path="/register" exact component={Register} />
                         <Route path="/dashboard" exact component={Email} />
+                        <Route path="/admindashboard" exact component={AdminDashboard}/>
                         <Route component={Home} />
                     </Switch>
                 </div>

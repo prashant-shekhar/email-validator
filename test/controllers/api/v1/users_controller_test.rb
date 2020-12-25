@@ -16,7 +16,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "valid response create user" do
-    post '/api/v1/users', params: {email: 'nikhilbhatt@gmail.com', password:'password',name:'name1',username:'username2'}, as: :json
+    post '/api/v1/users', params: {email: 'nikhilbhatt931@gmail.com', password:'password',name:'name1',username:'username3'}, as: :json
     assert_equal 200, response.status
   end 
 

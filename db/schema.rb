@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_20_132236) do
+ActiveRecord::Schema.define(version: 2020_12_25_101053) do
 
   create_table "emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci", force: :cascade do |t|
     t.string "email", null: false
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 2020_12_20_132236) do
     t.string "password", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "has_role", null: false
+    t.boolean "is_activated", default: false, null: false
   end
 
   add_foreign_key "emails", "users"

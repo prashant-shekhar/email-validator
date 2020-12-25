@@ -19,4 +19,8 @@ class User < ApplicationRecord
           false
         end
     end
+
+    def self.filter_users
+      self.where(has_role: 'user').select(:id, :name, :username, :email, :is_activated).all
+    end
 end

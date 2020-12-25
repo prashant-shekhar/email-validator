@@ -2,9 +2,8 @@ class Api::V1::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
   def index
     user = User.find(params[:user_id])
-    puts params[:user_id]
     if user.has_role == 'admin'
-      users = User.where(has_role: 'user').select(:id, :name, :username, :email, :is_activated).all
+      users = User.filter_users
       render json: users
     else
       render json: {error: true, message: "You are not authorize person"}, status: :unauthorized
@@ -33,7 +32,7 @@ class Api::V1::UsersController < ApplicationController
       payload= {user_id: user.id}
       token =encode_token(payload)
       copy_user= user.slice(:id , :name, :email, :username, :has_role)
-      render json: {user: copy_user,jwt: token, error: false, message: "Welocome back, #{user.name}"}
+      render json: {error: false, user: copy_user,jwt: token}
     else
       render json: { error: true, message: "Log in Failed! invalid email or password"}, status: :not_acceptable
     end 
@@ -52,11 +51,12 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: {error: true, message: "You are not authorize person."}, status: :unauthorized
     end
-
   end
 
   private
+
   def user_params
     params.permit(:name,:username,:email,:password, :has_role, :is_activated)
   end
+
 end

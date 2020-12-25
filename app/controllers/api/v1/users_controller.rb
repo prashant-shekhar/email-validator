@@ -9,10 +9,10 @@ class Api::V1::UsersController < ApplicationController
         usr= user.slice("id","name","email","username")
         render json: { user: usr, jwt: token}
       else
-        render json: {errors: user.errors.full_messages}
+        render json: {errors: user.errors.full_messages}, status: :not_acceptable
       end
     else
-      render json: {errors: ['Invalid Email!']}
+      render json: {errors: ['Invalid Email!']}, status: :not_acceptable
     end
   end
 
@@ -24,7 +24,7 @@ class Api::V1::UsersController < ApplicationController
       usr= user.slice("id","name","email","username")
       render json: {user: usr,jwt: token, error: false, message: "Welocome back, #{user.name}"}
     else
-      render json: { error: true, message: "Log in Failed! invalid email or password"}
+      render json: { error: true, message: "Log in Failed! invalid email or password"}, status: :not_acceptable
     end 
   end
 

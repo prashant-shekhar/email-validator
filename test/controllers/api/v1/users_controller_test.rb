@@ -15,14 +15,24 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     assert :success
   end
 
-  test "response create user" do
-    post '/api/v1/users', params: @user, as: :json
+  test "valid response create user" do
+    post '/api/v1/users', params: {email: 'someone2@gmail.com', password:'password',name:'name1',username:'username1'}, as: :json
     assert_equal 200, response.status
   end 
 
-  test "response login user" do
-    post '/api/v1/users/login', params:{email: 'email', password:'password'}, as: :json
+  test "invalid response create user" do
+    post '/api/v1/users', params: @user, as: :json
+    assert_equal 406, response.status
+  end 
+
+  test "valid response login user" do
+    post '/api/v1/users/login', params:{email: @user.email, password: 'nikhil'}, as: :json
     assert_equal 200, response.status
+  end
+
+  test "invalid response login user" do
+    post '/api/v1/users/login', params:{email: @user.email, password: 'nikhil1'}, as: :json
+    assert_equal 406, response.status
   end
 
 end

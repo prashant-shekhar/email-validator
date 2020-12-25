@@ -33,6 +33,12 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil @user.errors[:password], 'user is valid without password'
   end
 
+  test "invalid without has_role" do
+    @user.has_role = nil
+    assert_not @user.valid?, 'User is valid without Role'
+    assert_not_nil @user.errors[:has_role], 'User is valid without Role'
+  end
+
   test "valid email format" do
     assert_match URI::MailTo::EMAIL_REGEXP, @user.email, 'email is valid without matching format'
   end

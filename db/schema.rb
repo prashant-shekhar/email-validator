@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_12_25_101053) do
     t.index ["user_id"], name: "index_emails_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "username", null: false
     t.string "email", null: false

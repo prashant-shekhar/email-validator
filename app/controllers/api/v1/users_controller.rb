@@ -8,10 +8,10 @@ class Api::V1::UsersController < ApplicationController
         token = encode_token(payload)
         render json: { user: user, jwt: token}
       else
-        render json: {errors: user.errors.full_messages}, status: :not_acceptable
+        render json: {errors: user.errors.full_messages}
       end
     else
-      render json: {errors: ['Invalid Email!']}, status: :not_acceptable
+      render json: {errors: ['Invalid Email!']}
     end
   end
 

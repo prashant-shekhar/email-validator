@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :emails, only: [:create,:index]
       post "users/login", to: "users#login"
-      resource :users, only: [:create]
+      resources :users, only: [:create,:index]
     end
   end
   root 'home#index'

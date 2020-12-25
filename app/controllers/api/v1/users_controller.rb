@@ -6,12 +6,13 @@ class Api::V1::UsersController < ApplicationController
       if user.valid?
         payload = {user_id: user.id}
         token = encode_token(payload)
-        render json: { user: user, jwt: token}
+        copy_user= user.slice("id","name","email","username")
+        render json: { user: copy_user, jwt: token}
       else
-        render json: {errors: user.errors.full_messages}
+        render json: {errors: user.errors.full_messages}, status: :not_acceptable
       end
     else
-      render json: {errors: ['Invalid Email!']}
+      render json: {errors: ['Invalid Email!']}, status: :not_acceptable
     end
   end
 
@@ -20,9 +21,10 @@ class Api::V1::UsersController < ApplicationController
     if user && User.authenticate(user.password,params[:password])
       payload= {user_id: user.id}
       token =encode_token(payload)
-      render json: {user: user,jwt: token, error: false, message: "Welocome back, #{user.name}"}
+      copy_user= user.slice("id","name","email","username")
+      render json: {user: copy_user,jwt: token, error: false, message: "Welocome back, #{user.name}"}
     else
-      render json: { error: true, message: "Log in Failed! invalid email or password"}
+      render json: { error: true, message: "Log in Failed! invalid email or password"}, status: :not_acceptable
     end 
   end
 

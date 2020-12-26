@@ -1,4 +1,5 @@
 import React from "react";
+import "font-awesome/css/font-awesome.min.css";
 
 export default () => (
     <div className="mt-5 pt-5 pb-5 footer">
@@ -15,7 +16,12 @@ export default () => (
                     <ul className="m-0 p-0">
                         <li>
                             <a href="https://github.com/nikhilbhatt/EmailValidator">
-                                GitHub<i className="fab fa-github"></i>
+                                <i className="fa fa-github"></i> GitHub
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/company/elitmus-evaluation-pvt-ltd/">
+                                <i className="fa fa-linkedin"></i> eLitmus
                             </a>
                         </li>
                     </ul>

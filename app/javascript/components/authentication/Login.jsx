@@ -30,7 +30,7 @@ class Login extends Component {
                 },
                 body: JSON.stringify(this.state),
             }).then((result) => {
-                this.setState({isLoading: false})
+                this.setState({ isLoading: false });
                 result.json().then((resp) => {
                     if (resp.error) {
                         swal("Oops!", resp.message, "error");
@@ -52,7 +52,7 @@ class Login extends Component {
                 });
             });
         } else {
-        this.setState({isLoading: false})
+            this.setState({ isLoading: false });
         }
     }
 

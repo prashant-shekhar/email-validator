@@ -19,7 +19,7 @@ export default class Register extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.setState({isLoading: true})
+        this.setState({ isLoading: true });
         const token = document.querySelector("[name=csrf-token]").content;
         if (this.validate()) {
             fetch("/api/v1/users", {
@@ -31,7 +31,7 @@ export default class Register extends Component {
                 },
                 body: JSON.stringify(this.state),
             }).then((result) => {
-                this.setState({isLoading: false})
+                this.setState({ isLoading: false });
                 if (result.ok) {
                     result.json().then((resp) => {
                         swal(
@@ -48,7 +48,7 @@ export default class Register extends Component {
                 }
             });
         } else {
-        this.setState({isLoading: false})
+            this.setState({ isLoading: false });
         }
     }
 

@@ -10,6 +10,7 @@ export default class Register extends Component {
             email: "",
             password: "",
             confirm_password: "",
+            isLoading: false,
             errors: {},
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,6 +19,7 @@ export default class Register extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({ isLoading: true });
         const token = document.querySelector("[name=csrf-token]").content;
         if (this.validate()) {
             fetch("/api/v1/users", {
@@ -29,6 +31,7 @@ export default class Register extends Component {
                 },
                 body: JSON.stringify(this.state),
             }).then((result) => {
+                this.setState({ isLoading: false });
                 if (result.ok) {
                     result.json().then((resp) => {
                         swal(
@@ -44,6 +47,8 @@ export default class Register extends Component {
                     });
                 }
             });
+        } else {
+            this.setState({ isLoading: false });
         }
     }
 
@@ -178,11 +183,24 @@ export default class Register extends Component {
                                     {this.state.errors.confirm_password}
                                 </div>
                             </div>
-                            <input
+                            <button
                                 type="submit"
                                 className="form-control btn btn-primary"
-                                value="Register"
-                            />
+                                disabled={this.state.isLoading}
+                            >
+                                {!this.state.isLoading ? (
+                                    <span>Register</span>
+                                ) : (
+                                    <div
+                                        className="spinner-border text-light spinner-border-sm"
+                                        role="status"
+                                    >
+                                        <span className="sr-only">
+                                            Loading...
+                                        </span>
+                                    </div>
+                                )}
+                            </button>
                             <div className="text-right mt-3 ">
                                 <small className="justify-content-end">
                                     Already Registered User?{" "}

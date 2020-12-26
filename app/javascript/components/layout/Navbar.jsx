@@ -13,7 +13,7 @@ const Navbar = () => {
             if (state.isLoggedIn) {
                 history.push("/dashboard");
             } else if (isUser) {
-                const user = localStorage.getItem("user");
+                const user = JSON.parse(localStorage.getItem("user"));
                 dispatch(
                     loginUser({ token: isUser, user: user, isLoggedIn: true })
                 );
@@ -24,8 +24,12 @@ const Navbar = () => {
         }, []);
         if (state.isLoggedIn) {
             return [
+                <li key="nav-home" className="nav-item mr-2">
+                    <button className="btn btn-link text-white">
+                        Welcome, {state.user.name}
+                    </button>
+                </li>,
                 <li key="nav-logout" className="nav-item">
-
                     <button
                         onClick={() => {
                             localStorage.clear();
@@ -36,16 +40,7 @@ const Navbar = () => {
                     >
                         Logout
                     </button>
-
                 </li>,
-                <li key="nav-home" className="nav-item ml-2">
-                    
-                <button
-                    className="btn waves-light bg-white logout-btn"
-                >
-                    {state.user.name}
-                </button>
-            </li>,
             ];
         } else {
             return [

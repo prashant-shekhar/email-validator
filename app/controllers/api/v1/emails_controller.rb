@@ -16,4 +16,9 @@ class Api::V1::EmailsController < ApplicationController
     end
     render json: res.result.success
   end
+
+  def import
+    emails.import(params[:files])
+    redirect_to emails_path, notice: "Your File Added Successfully"
+  end
 end

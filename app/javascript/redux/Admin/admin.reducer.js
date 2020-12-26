@@ -6,10 +6,6 @@ const INITIAL_STATE={
 
 const adminReducer= (state=INITIAL_STATE, action) =>{
     switch(action.type){
-        case ADMIN_USER_CREATE_SUCCESS:
-            return {
-                users: [action.payload,...state.users]
-            }
         case USER_UPDATE_SUCCESS:
             return {
                 users: [...state.users]

@@ -1,11 +1,4 @@
-import {ADMIN_USER_CREATE_SUCCESS, USER_UPDATE_SUCCESS, FETCH_USER_SUCCESS} from './admin.types';
-
-export const adminUserCreateSuccess= (payload)=> {
-    return {
-        type:ADMIN_USER_CREATE_SUCCESS,
-        payload: payload
-    }
-}
+import { USER_UPDATE_SUCCESS, FETCH_USER_SUCCESS} from './admin.types';
 
 export const userUpdateSuccess= (payload)=> {
     return {

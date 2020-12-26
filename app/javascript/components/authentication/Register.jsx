@@ -206,14 +206,16 @@ export default class Register extends Component {
                                     </div>
                                 )}
                             </button>
-                            {this.props.has_role=="user"?
+                            {
+                                this.props.has_role!="admin"?
                                     <div className="text-right mt-3 ">
                                         <small className="justify-content-end">
                                             Already Registered User?
                                             <Link to="login">Login Here</Link>
                                         </small>
                                     </div>:
-                                    null}
+                                    null
+                                }
                         </form>
                     </div>
                 </div>

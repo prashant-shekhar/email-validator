@@ -1,7 +1,7 @@
 import {ADMIN_USER_CREATE_SUCCESS, USER_VALIDATE_SUCCESS, FETCH_USER_SUCCESS} from './admin.types';
 
 const INITIAL_STATE={
-    users=[],
+    users: [],
 }
 
 const adminReducer= (state=INITIAL_STATE, action) =>{

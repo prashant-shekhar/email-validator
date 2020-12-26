@@ -186,7 +186,11 @@ export default class Register extends Component {
                             <div className="text-right mt-3 ">
                                 <small className="justify-content-end">
                                     Already Registered User?{" "}
-                                    <Link to="login">Login Here</Link>{" "}
+                                    <Link to="login">Login Here</Link>
+                                </small>
+                                <small className="justify-content-end">
+                                    Already Registered User?{" USER"}
+                                    <Link to="admindashboard">Login Here</Link>
                                 </small>
                             </div>
                         </form>

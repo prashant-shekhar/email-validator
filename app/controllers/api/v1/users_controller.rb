@@ -49,7 +49,7 @@ class Api::V1::UsersController < ApplicationController
         render json: {errors: user.errors.full_messages}, status: :not_acceptable
       end
     else
-      render json: {error: true, message: "You are not authorize person."}, status: :unauthorized
+      render json: {errors:["You are not authorize person."]}, status: :unauthorized
     end
   end
 

@@ -1,20 +1,49 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import User from './User'
+import {userUpdateSuccess} from '../../redux/Admin/admin.actions'
 class UserList extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
+        this.handleActivate=this.handleActivate.bind(this)
     }
 
-    handleActivate(id){
-        console.log(id);
+    handleActivate(index,currentUser){
+
         if (confirm('Are you sure?')){
-            //Database Update using routes
+            currentUser['is_activated']=!currentUser['is_activated'];
+            const token = document.querySelector("[name=csrf-token]").content;
+            const admin_id = JSON.parse(localStorage.getItem("user"));
+            const url = `/api/v1/users/${currentUser.id}`;
+            const data = {
+                admin_id: admin_id,
+                is_activated: currentUser['is_activated'] ,
+            };
+            fetch(url, {
+                method: "PUT",
+                headers: {
+                    "X-CSRF-Token": token,
+                    Accept: "application/json",
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }).then((result) => {
+                result.json().then((resp) => {
+                    if (resp.user) {
+                        const message= currentUser['is_activated']?`${resp.user.name} is authorized to Bulk Upload`:`${resp.user.name} permission is restricted for bulk upload`;
+                        swal("Accepted!",message,"success");
+                        let updatedUsers= this.props.users;
+                        updatedUsers[index]=currentUser; 
+                        this.props.userUpdateSuccess(updatedUsers);
+                    } else {
+                        swal("Oops!",resp.errors[0],"error");
+                    }
+                });
+            });    
         }
     }
     render() {
         const users = this.props.users;
-        console.log(users);
         const allUsers = users.map((user, index) => (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
@@ -22,7 +51,7 @@ class UserList extends Component {
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <td>
-                    <button className={"btn "+(user.is_activated?'btn-outline-danger':'btn-outline-success')} onClick={() => this.handleActivate(user.id)}>{user.is_activated?'Deactivate':'Activate'}</button>
+                    <button className={"btn "+(user.is_activated?'btn-outline-danger':'btn-outline-success')} onClick={() => this.handleActivate(index,user)}>{user.is_activated?'Deactivate':'Activate'}</button>
                 </td>
             </tr>
         ));
@@ -55,7 +84,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchUserSuccess: (payload) => dispatch(fetchUserSuccess(payload)),
+        userUpdateSuccess: (payload) => dispatch(userUpdateSuccess(payload)),
     };
 };
 

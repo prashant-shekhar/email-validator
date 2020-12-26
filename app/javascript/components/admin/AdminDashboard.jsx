@@ -7,7 +7,7 @@ class AdminDashboard extends Component {
        super(props)
    }
    componentDidMount(){
-        const url ='/api/v1/users?user_id=23';
+        const url ='/api/v1/users?user_id=17';
         fetch(url)
             .then((result) => {
                 if (result.ok) {
@@ -20,7 +20,6 @@ class AdminDashboard extends Component {
                 console.log(error);
             });
     }
-
 
     render() {
         return (

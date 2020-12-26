@@ -1,4 +1,4 @@
-import {ADMIN_USER_CREATE_SUCCESS, USER_VALIDATE_SUCCESS, FETCH_USER_SUCCESS} from './admin.types';
+import {ADMIN_USER_CREATE_SUCCESS, USER_UPDATE_SUCCESS, FETCH_USER_SUCCESS} from './admin.types';
 
 const INITIAL_STATE={
     users: [],
@@ -10,9 +10,9 @@ const adminReducer= (state=INITIAL_STATE, action) =>{
             return {
                 users: [action.payload,...state.users]
             }
-        case USER_VALIDATE_SUCCESS:
+        case USER_UPDATE_SUCCESS:
             return {
-                users: [action.payload,...state.users]
+                users: [...state.users]
             }
         case FETCH_USER_SUCCESS:
             return {

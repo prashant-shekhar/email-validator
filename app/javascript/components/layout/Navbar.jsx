@@ -25,9 +25,9 @@ const Navbar = () => {
         if (state.isLoggedIn) {
             return [
                 <li key="nav-home" className="nav-item mr-2">
-                    <Link to="#" className="text-white">
+                    <button className="btn btn-link text-white">
                         Welcome, {state.user.name}
-                    </Link>
+                    </button>
                 </li>,
                 <li key="nav-logout" className="nav-item">
                     <button

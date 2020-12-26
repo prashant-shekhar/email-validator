@@ -9,6 +9,7 @@ class Login extends Component {
         this.state = {
             email: "",
             password: "",
+            isLoading: false,
             errors: {},
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,6 +18,7 @@ class Login extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({ isLoading: true });
         const token = document.querySelector("[name=csrf-token]").content;
         if (this.validate()) {
             fetch("/api/v1/users/login", {
@@ -28,6 +30,7 @@ class Login extends Component {
                 },
                 body: JSON.stringify(this.state),
             }).then((result) => {
+                this.setState({isLoading: false})
                 result.json().then((resp) => {
                     if (resp.error) {
                         swal("Oops!", resp.message, "error");
@@ -48,6 +51,8 @@ class Login extends Component {
                     }
                 });
             });
+        } else {
+        this.setState({isLoading: false})
         }
     }
 
@@ -115,11 +120,24 @@ class Login extends Component {
                                     {this.state.errors.password}
                                 </div>
                             </div>
-                            <input
+                            <button
                                 type="submit"
                                 className="form-control btn btn-primary"
-                                value="Login"
-                            />
+                                disabled={this.state.isLoading}
+                            >
+                                {!this.state.isLoading ? (
+                                    <span>Login</span>
+                                ) : (
+                                    <div
+                                        className="spinner-border text-light spinner-border-sm"
+                                        role="status"
+                                    >
+                                        <span className="sr-only">
+                                            Loading...
+                                        </span>
+                                    </div>
+                                )}
+                            </button>
                             <div className="text-right mt-3 ">
                                 <small className="justify-content-end">
                                     New User?{" "}

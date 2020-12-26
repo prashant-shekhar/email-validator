@@ -12,7 +12,6 @@ class EmailCreate extends Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validate = this.validate.bind(this);
-        this.setState = this.setState.bind(this);
     }
 
     handleSubmit(e) {

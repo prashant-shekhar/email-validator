@@ -8,7 +8,7 @@ class EmailCreate extends Component {
         this.state = {
             email: "",
             errors: {},
-            file: "",
+            file: null,
             isLoading: false,
             isUploading: false,
             isUploadSuccess: false,

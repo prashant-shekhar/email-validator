@@ -8,7 +8,8 @@ class AdminDashboard extends Component {
        super(props)
    }
    componentDidMount(){
-        const url ='/api/v1/users?user_id=17';
+        const user = JSON.parse(localStorage.getItem("user"));
+        const url =`/api/v1/users?user_id=${user.id}`;
         fetch(url)
             .then((result) => {
                 if (result.ok) {

@@ -11,11 +11,9 @@ const Navbar = () => {
         const history = useHistory();
         useEffect(() => {
             if (state.isLoggedIn) {
-                console.log('nikhil',state.user.has_role); 
                 state.user.has_role=='admin'?history.push("/admindashboard"):history.push("/dashboard");
             } else if (isUser) {
                 const user = JSON.parse(localStorage.getItem("user"));
-                console.log('nikhil',user.has_role);
                 dispatch(loginUser({ token: isUser, user: user, isLoggedIn: true }));
                 user.has_role=='admin'?history.push("/admindashboard"):history.push("/dashboard");
             } else {

@@ -10,7 +10,6 @@ export default class CreateAdmin extends Component {
         this.props.history.push('/admindashboard')
     }
     render() {
-        console.log(this.props);
         return (
             <>
                 <Register redirectToAdmin={this.redirect} has_role="admin"/>

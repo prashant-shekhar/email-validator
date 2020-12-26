@@ -11,10 +11,11 @@ class UserList extends Component {
         if (confirm('Are you sure?')){
             currentUser['is_activated']=!currentUser['is_activated'];
             const token = document.querySelector("[name=csrf-token]").content;
-            const admin_id = JSON.parse(localStorage.getItem("user"));
+            const user = JSON.parse(localStorage.getItem("user"));
+            const admin_id=user.id;
             const url = `/api/v1/users/${currentUser.id}`;
             const data = {
-                admin_id: 17,
+                admin_id: admin_id,
                 is_activated: currentUser['is_activated'] ,
             };
             fetch(url, {

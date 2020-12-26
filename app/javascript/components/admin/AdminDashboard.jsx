@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import {fetchUserSuccess} from '../../redux/Admin/admin.actions'
+import Stats from './Stats';
 import UserList from './UserList';
 class AdminDashboard extends Component {
    constructor(props){
@@ -23,13 +24,10 @@ class AdminDashboard extends Component {
 
     render() {
         return (
-            <div className="container">
-            <div className="row">
-                <div className="col-sm">
-                    <UserList />
-                </div>
+            <div className="col-10">
+                <Stats totalUsers={this.props.users.length} totalActivatedUsers={this.props.users.filter(user=>(user.is_activated===true)).length}/>
+                <UserList />
             </div>
-        </div>
         )
     }
 }

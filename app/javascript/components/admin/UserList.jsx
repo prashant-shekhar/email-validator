@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
-import User from './User'
 import {userUpdateSuccess} from '../../redux/Admin/admin.actions'
 class UserList extends Component {
     constructor(props){
@@ -9,14 +8,13 @@ class UserList extends Component {
     }
 
     handleActivate(index,currentUser){
-
         if (confirm('Are you sure?')){
             currentUser['is_activated']=!currentUser['is_activated'];
             const token = document.querySelector("[name=csrf-token]").content;
             const admin_id = JSON.parse(localStorage.getItem("user"));
             const url = `/api/v1/users/${currentUser.id}`;
             const data = {
-                admin_id: admin_id,
+                admin_id: 17,
                 is_activated: currentUser['is_activated'] ,
             };
             fetch(url, {
@@ -56,7 +54,7 @@ class UserList extends Component {
             </tr>
         ));
         return (
-            <div className="content">
+            <div className="content mt-4">
                 <h1>Users List</h1>  
                 <table className="table table-striped table-bordered table-hover">
                     <thead>

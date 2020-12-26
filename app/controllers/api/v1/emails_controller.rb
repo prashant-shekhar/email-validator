@@ -1,4 +1,5 @@
 class Api::V1::EmailsController < ApplicationController
+  
   def index
     user=User.find(params[:userid])
     emails= user.emails

@@ -51,6 +51,6 @@ test:
 #
 production:
   <<: *default
-  database: EmailValidator_production
-  username: EmailValidator
-  password: <%= ENV['EMAILVALIDATOR_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DATABASE_URL'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORDs'] %>

@@ -5,4 +5,13 @@ valid:
   username: maniSHarma
   email: manish.sharma@elitmus.com
   password: $2a$12$r/Ll6ub8BE8begKkq4HqxeCzdotgfMd2Fgrn6MUhon12tfqs9K/WG
-  has_role : user
+  has_role: user
+
+admin:
+  id: 2
+  name: Admin Tester
+  username: adminTester
+  email: admin@tester.com
+  password: admin_password
+  has_role: admin
+  is_activated: true

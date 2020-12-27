@@ -9,7 +9,7 @@ export default class Stats extends Component {
         return (
             <div className="row ">
                 <div className="col-sm-12 col-lg-4">
-                    <div className="card shadow p-3 mb-5 bg-white rounded h-100">
+                    <div className="card shadow p-3 bg-white rounded h-100">
                         <div className="card-body">
                             <h5 className="card-title text-center">Total Users</h5>
                             <h2 className="card-text text-center">{this.props.totalUsers}</h2>
@@ -17,7 +17,7 @@ export default class Stats extends Component {
                     </div>
                 </div>
                 <div className="col-sm-12 col-lg-4">
-                    <div className="card shadow p-3 mb-5 bg-white rounded h-100">
+                    <div className="card shadow p-3 bg-white rounded h-100">
                         <div className="card-body">
                             <h5 className="card-title text-center">User With CSV Permission</h5>
                             <h2 className="card-text text-center">{this.props.totalActivatedUsers}</h2>
@@ -25,7 +25,7 @@ export default class Stats extends Component {
                     </div>
                 </div>
                 <div className="col-sm-12 col-lg-4">
-                    <div className="card shadow p-3 mb-5 bg-white rounded h-100">
+                    <div className="card shadow p-3 bg-white rounded h-100">
                         <div className="card-body">
                             <h5 className="card-title text-center">User Without CSV Permission</h5>
                             <h2 className="card-text text-center">{this.props.totalUsers-this.props.totalActivatedUsers}</h2>

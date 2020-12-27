@@ -11,37 +11,63 @@ const Navbar = () => {
         const history = useHistory();
         useEffect(() => {
             if (state.isLoggedIn) {
-                history.push("/dashboard");
+                state.user.has_role=='admin'?history.push("/admindashboard"):history.push("/dashboard");
             } else if (isUser) {
                 const user = JSON.parse(localStorage.getItem("user"));
-                dispatch(
-                    loginUser({ token: isUser, user: user, isLoggedIn: true })
-                );
-                history.push("/dashboard");
+                dispatch(loginUser({ token: isUser, user: user, isLoggedIn: true }));
+                user.has_role=='admin'?history.push("/admindashboard"):history.push("/dashboard");
             } else {
                 history.push("/");
             }
         }, []);
         if (state.isLoggedIn) {
-            return [
-                <li key="nav-home" className="nav-item mr-2">
-                    <button className="btn btn-link text-white">
-                        Welcome, {state.user.name}
-                    </button>
-                </li>,
-                <li key="nav-logout" className="nav-item">
-                    <button
-                        onClick={() => {
-                            localStorage.clear();
-                            dispatch(logoutUser());
-                            history.push("/login");
-                        }}
-                        className="btn waves-light bg-white logout-btn"
-                    >
-                        Logout
-                    </button>
-                </li>,
-            ];
+            if(state.user.has_role=='admin'){
+                return [
+                    <li key="nav-home" className="nav-item mr-2">
+                        <button className="btn btn-link text-white">
+                            Welcome, {state.user.name}
+                        </button>
+                    </li>,
+                    <li key="nav-create-user" className="nav-item mr-2">
+                        <Link className="nav-link" to="createadmin">
+                                 Create New Admin
+                         </Link>
+                    </li>,
+                    <li key="nav-logout" className="nav-item mr-2">
+                        <button
+                            onClick={() => {
+                                localStorage.clear();
+                                dispatch(logoutUser());
+                                history.push("/login");
+                            }}
+                            className="btn waves-light bg-white logout-btn"
+                        >
+                            Logout
+                        </button>
+                    </li>,
+                ];
+            }else{
+                return [
+                    <li key="nav-home" className="nav-item mr-2">
+                        <button className="btn btn-link text-white">
+                            Welcome, {state.user.name}
+                        </button>
+                    </li>,
+                    <li key="nav-logout" className="nav-item">
+                        <button
+                            onClick={() => {
+                                localStorage.clear();
+                                dispatch(logoutUser());
+                                history.push("/login");
+                            }}
+                            className="btn waves-light bg-white logout-btn"
+                        >
+                            Logout
+                        </button>
+                    </li>,
+                ];
+            }
+            
         } else {
             return [
                 <li key="nav-login" className="nav-item active">

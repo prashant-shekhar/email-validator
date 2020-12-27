@@ -10,6 +10,7 @@ export default class Register extends Component {
             email: "",
             password: "",
             confirm_password: "",
+            has_role: "user",
             isLoading: false,
             errors: {},
         };
@@ -19,6 +20,9 @@ export default class Register extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        if(this.props.has_role=="admin"){
+            this.state.has_role=this.props.has_role;
+        }
         this.setState({ isLoading: true });
         const token = document.querySelector("[name=csrf-token]").content;
         if (this.validate()) {
@@ -34,12 +38,13 @@ export default class Register extends Component {
                 this.setState({ isLoading: false });
                 if (result.ok) {
                     result.json().then((resp) => {
+                        const message= this.props.has_role=='admin'?"New Admin Created Successfully":"You made it! Registration successfull, please login now";
                         swal(
                             "Good job!",
-                            "You made it! Registration successfull, please login now",
+                            message,
                             "success"
                         );
-                        this.props.history.push("/login");
+                        this.props.has_role=="admin"?this.props.redirectToAdmin():this.props.history.push("/login");
                     });
                 } else {
                     result.json().then((resp) => {
@@ -89,7 +94,7 @@ export default class Register extends Component {
             <div className="Login container mt-5">
                 <div className="card col-7 mx-auto my-auto">
                     <h2 className="card-title text-center mt-4">
-                        Email Validator Register
+                        {this.props.has_role=='admin'?'Create New Admin':'Email Validator Register'}
                     </h2>
                     <div className="card-body">
                         <form onSubmit={this.handleSubmit}>
@@ -201,12 +206,16 @@ export default class Register extends Component {
                                     </div>
                                 )}
                             </button>
-                            <div className="text-right mt-3 ">
-                                <small className="justify-content-end">
-                                    Already Registered User?{" "}
-                                    <Link to="login">Login Here</Link>{" "}
-                                </small>
-                            </div>
+                            {
+                                this.props.has_role!="admin"?
+                                    <div className="text-right mt-3 ">
+                                        <small className="justify-content-end">
+                                            Already Registered User?
+                                            <Link to="login">Login Here</Link>
+                                        </small>
+                                    </div>:
+                                    null
+                                }
                         </form>
                     </div>
                 </div>

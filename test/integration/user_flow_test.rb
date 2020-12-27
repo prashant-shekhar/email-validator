@@ -12,7 +12,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "creating an user" do
-    post "/api/v1/users", params: {name: 'New User', email: 'nikhil.bhatt@elitmus.com' ,username: 'New_Username', password: 'sample_password', has_role: 'user', is_activated: true}, as: :json
+    post "/api/v1/users", params: {name: 'New User', email: 'prashant.shekhar@elitmus.com' ,username: 'New_Username', password: 'sample_password', has_role: 'user', is_activated: true}, as: :json
     assert_response :success
   end
 

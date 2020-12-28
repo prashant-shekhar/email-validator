@@ -11,7 +11,7 @@
 #
 default: &default
   adapter: mysql2
-  encoding: utf8mb4
+  encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: <%= Rails.application.secrets[:username]%>
   password: <%= Rails.application.secrets[:password]%>
@@ -50,7 +50,11 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: EmailValidator_production
-  username: EmailValidator
-  password: <%= ENV['EMAILVALIDATOR_DATABASE_PASSWORD'] %>
+  url: <%= ENV['CLEARDB_DATABASE_URL'] %>
+  adapter: mysql2
+  encoding: utf8
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: localhost
+  port: /var/run/mysqld/mysqld.sock

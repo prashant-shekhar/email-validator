@@ -44,3 +44,11 @@
     overflow-y: auto;
     max-height: 450px;
 }
+
+.font-monda {
+    font-family: 'Fredoka One', sans-serif;
+}
+
+.font-caveat {
+    font-family: 'Caveat', sans-serif;
+}

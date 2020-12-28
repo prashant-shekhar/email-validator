@@ -34,7 +34,7 @@ class EmailList extends Component {
             <h6 className="m-3">No email yet. Why not create one</h6>
         );
         return (
-            <div className="card shadow mb-5 bg-white rounded-lg scrollable">
+            <div className="card shadow mt-5 mb-5 bg-white rounded-lg scrollable">
                 <div className="card-header bg-primary text-white">
                     <span className="badge badge-light mr-2">
                         {emails.length}

@@ -108,7 +108,7 @@ class EmailCreate extends Component {
     render() {
         return (
             <div className="mb-3">
-                <h1 className="display-4 font-monda">Email Validator.</h1>
+                <h1 className="display-4 heading font-monda">Email Validator.</h1>
                 <div className="display-4 font-monda">Easy, Fast & Cheap.</div>
                 <p className="text-muted mt-3 mb-4">
                     Email Validator will clean your mailing list and increase
@@ -234,3 +234,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmailCreate);
+
+export {EmailCreate}

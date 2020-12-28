@@ -34,16 +34,21 @@ class EmailList extends Component {
             <h6 className="m-3">No email yet. Why not create one</h6>
         );
         return (
-            <div className="card shadow mt-5 mb-5 bg-white rounded-lg scrollable">
-                <div className="card-header bg-primary text-white">
-                    <span className="badge badge-light mr-2">
-                        {emails.length}
-                    </span>
-                    <span>Validated Email List</span>
+            <div>
+                <h4 className="font-monda mt-3 mb-3">
+                    Your's Validated Emails List
+                </h4>
+                <div className="card mt-3 mb-5 bg-white rounded-lg scrollable">
+                    <div className="card-header bg-primary text-white">
+                        <span className="badge badge-light mr-2">
+                            {emails.length}
+                        </span>
+                        <span>Validated Email List</span>
+                    </div>
+                    <ul className="list-group list-group-flush scrollable">
+                        {emails.length > 0 ? allEmails : noEmail}
+                    </ul>
                 </div>
-                <ul className="list-group list-group-flush scrollable">
-                    {emails.length > 0 ? allEmails : noEmail}
-                </ul>
             </div>
         );
     }

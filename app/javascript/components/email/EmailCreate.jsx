@@ -47,7 +47,14 @@ class EmailCreate extends Component {
                         "success"
                     );
                     const email = this.state.email;
-                    this.props.createEmailSuccess({ email });
+                    var isPresent =
+                        this.props.emails.filter((i) => email == i.email)
+                            .length > 0
+                            ? true
+                            : false;
+                    if (!isPresent) {
+                        this.props.createEmailSuccess({ email });
+                    }
                 } else {
                     swal(
                         "Oops!",
@@ -100,13 +107,13 @@ class EmailCreate extends Component {
 
     render() {
         return (
-            <div>
+            <div className="mb-3">
                 <h1 className="display-4 font-monda">Email Validator.</h1>
-                <div className="display-4 font-monda">
-                    Easy, Fast & Cheap.
-                </div>
-                <p className="text-muted mt-3 mb-3">
-                Email Validator will clean your mailing list and increase deliverability rate up to 99%. The email address validation process was never so easy.
+                <div className="display-4 font-monda">Easy, Fast & Cheap.</div>
+                <p className="text-muted mt-3 mb-4">
+                    Email Validator will clean your mailing list and increase
+                    deliverability rate up to 99%. The email address validation
+                    process was never so easy.
                 </p>
                 <form onSubmit={this.handleSubmit}>
                     <div className="row">
@@ -135,28 +142,23 @@ class EmailCreate extends Component {
                                 disabled={this.state.isLoading}
                             >
                                 {!this.state.isLoading ? (
-                                    <span>validate</span>
+                                    <span>Validate Mail</span>
                                 ) : (
-                                    <div
-                                        className="spinner-border text-light spinner-border-sm"
-                                        role="status"
-                                    >
-                                        <span className="sr-only">
-                                            Loading...
-                                        </span>
-                                    </div>
+                                    <i className="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
                                 )}
                             </button>
                         </div>
                     </div>
                 </form>
-                <h6 className="card-subtitle mb-2">Validate Multiple Emails</h6>
+                <h4 className="font-monda mt-4 mb-3">
+                    Validate Multiple Emails
+                </h4>
                 <div className="row">
-                    <div className="col-8 mb-2">
+                    <div className="col-8 mb-3">
                         <div className="custom-file">
                             <input
                                 type="file"
-                                className="custom-file-input"
+                                className="custom-file-input form-control-lg"
                                 id="customFile"
                                 accept=".csv"
                                 onChange={(e) => {
@@ -164,10 +166,14 @@ class EmailCreate extends Component {
                                         file: e.target.files[0],
                                     });
                                 }}
-                                disabled={this.state.isUploading}
+                                disabled={
+                                    (this.props.user &&
+                                        !this.props.user.is_activated) ||
+                                    this.state.isUploading
+                                }
                             />
                             <label
-                                className="custom-file-label"
+                                className="custom-file-label col-form-label-lg"
                                 htmlFor="customFile"
                             >
                                 {this.state.file
@@ -176,7 +182,9 @@ class EmailCreate extends Component {
                             </label>
                         </div>
                         <div className="mt-2">
-                            <span>Please upload only csv</span>
+                            <span className="text-muted">
+                                Please upload only csv
+                            </span>
                             <a href="#"> Sample.csv</a>
                         </div>
                     </div>
@@ -187,7 +195,7 @@ class EmailCreate extends Component {
                         {this.state.isUploadSuccess && (
                             <a
                                 href="#"
-                                className="w-100 btn btn-primary active"
+                                className="w-100 btn btn-lg btn-primary active"
                                 role="button"
                                 aria-pressed="true"
                             >
@@ -200,6 +208,13 @@ class EmailCreate extends Component {
                         )}
                     </div>
                 </div>
+                {this.props.user && !this.props.user.is_activated && (
+                    <div className="mt-3 alert alert-dark" role="alert">
+                        Note: Please contact admin to unable this feature.
+                    </div>
+                )}
+                <br />
+                <br />
             </div>
         );
     }
@@ -208,6 +223,7 @@ class EmailCreate extends Component {
 const mapStateToProps = (state) => {
     return {
         emails: state.email.emails,
+        user: state.user.user,
     };
 };
 

@@ -47,7 +47,7 @@ class EmailCreate extends Component {
                         "success"
                     );
                     const email = this.state.email;
-                    var isPresent =
+                    let isPresent =
                         this.props.emails.filter((i) => email == i.email)
                             .length > 0
                             ? true

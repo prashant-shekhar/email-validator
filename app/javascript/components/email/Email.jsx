@@ -6,11 +6,12 @@ const Email = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="col-sm">
+                <div className="col-sm-6 col-6">
+                    <EmailCreate />
                     <EmailList />
                 </div>
-                <div className="col-sm">
-                    <EmailCreate />
+                <div className="col-sm-6 col-6">
+                    <img className="d-block w-100" src="/header_main-page.svg"></img>
                 </div>
             </div>
         </div>

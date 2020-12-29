@@ -9,23 +9,27 @@ class EmailBulk extends Component {
             file: null,
             isUploading: false,
             isUploadSuccess: false,
-            downloadLink: "#"
+            downloadLink: "#",
         };
         this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.file !== this.state.file) {
-            this.setState({ isUploading: false, isUploadSuccess: false, downloadLink: "#" });
+            this.setState({
+                isUploading: false,
+                isUploadSuccess: false,
+                downloadLink: "#",
+            });
         }
     }
 
     handleClick() {
-        this.setState({isUploading: true})
+        this.setState({ isUploading: true });
         const user = JSON.parse(localStorage.getItem("user"));
         const data = new FormData();
         data.append("file", this.state.file);
-        data.append("userid", user.id)
+        data.append("userid", user.id);
         const token = document.querySelector("[name=csrf-token]").content;
         let url = "/api/v1/emails?type=csv";
         fetch(url, {
@@ -37,21 +41,19 @@ class EmailBulk extends Component {
         }).then((result) => {
             this.setState({ isUploading: false });
             result.json().then((resp) => {
-                console.log(resp)
-                if(!resp.error){
+                console.log(resp);
+                if (!resp.error) {
                     swal(
                         "Good job!",
                         "Email List validated successfully. Please download now",
                         "success"
                     );
-                    this.setState({isUploadSuccess: true, downloadLink: resp.file_path.substring(35)})
-                }
-                else {
-                    swal(
-                        "Oops!",
-                        resp.message,
-                        "error"
-                    );
+                    this.setState({
+                        isUploadSuccess: true,
+                        downloadLink: resp.file_path.substring(35),
+                    });
+                } else {
+                    swal("Oops!", resp.message, "error");
                 }
             });
         });
@@ -62,8 +64,9 @@ class EmailBulk extends Component {
             <div>
                 <h1 className="display-4 font-monda">Bulk Email Verifier.</h1>
                 <p className="text-muted mt-3 mb-4">
-                    Use our system to remove invalid addresses from your list. Keep your list clean to protect
-                    your deliverability and reputation.
+                    Use our system to remove invalid addresses from your list.
+                    Keep your list clean to protect your deliverability and
+                    reputation.
                 </p>
                 <div className="row">
                     <div className="col-8 mb-3">
@@ -101,10 +104,17 @@ class EmailBulk extends Component {
                         </div>
                     </div>
                     <div className="col-4 mb-2">
-                        {
-                            (!this.state.isUploading && !this.state.isUploadSuccess) && 
-                            <button type="button" className="btn btn-primary btn-lg w-100" onClick={this.handleClick} disabled={!this.state.file}>Upload</button>
-                        }
+                        {!this.state.isUploading &&
+                            !this.state.isUploadSuccess && (
+                                <button
+                                    type="button"
+                                    className="btn btn-primary btn-lg w-100"
+                                    onClick={this.handleClick}
+                                    disabled={!this.state.file}
+                                >
+                                    Upload
+                                </button>
+                            )}
                         {this.state.isUploading && (
                             <i className="ml-5 justify-content-center fa fa-spinner fa-pulse fa-2x fa-fw"></i>
                         )}

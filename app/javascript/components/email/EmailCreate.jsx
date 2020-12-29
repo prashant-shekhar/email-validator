@@ -8,67 +8,13 @@ class EmailCreate extends Component {
         this.state = {
             email: "",
             errors: {},
-            file: null,
             isLoading: false,
-            isUploading: false,
-            isUploadSuccess: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validate = this.validate.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.file !== this.state.file) {
-            this.setState({ isUploading: true, isUploadSuccess: false });
-            const user = JSON.parse(localStorage.getItem("user"));
-            const data = new FormData();
-            data.append("file", this.state.file);
-            data.append("userid", user.id)
-            this.handleFetchRequest(data, true);
-        }
-    }
-
-    handleFetchRequest(data, type = false) {
-        const token = document.querySelector("[name=csrf-token]").content;
-        let url = "/api/v1/emails";
-        console.log(type)
-        if(type) url+="?type=csv"
-        console.log(url)
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "X-CSRF-Token": token,
-            },
-            body: data,
-        }).then((result) => {
-            this.setState({ isUploading: false });
-            result.json().then((resp) => {
-                if (resp) {
-                    swal(
-                        "Good job!",
-                        "Email is validated successfully",
-                        "success"
-                    );
-                    const email = this.state.email;
-                    let isPresent =
-                        this.props.emails.filter((i) => email == i.email)
-                            .length > 0
-                            ? true
-                            : false;
-                    if (!isPresent) {
-                        this.props.createEmailSuccess({ email });
-                    }
-                } else {
-                    swal(
-                        "Oops!",
-                        "You must try with another email address",
-                        "error"
-                    );
-                }
-                this.setState({ email: "", errors: {}, isLoading: false });
-            });
-        });
-    }
+    handleFetchRequest(data) {}
 
     handleSubmit(e) {
         e.preventDefault();
@@ -79,7 +25,43 @@ class EmailCreate extends Component {
                 email: this.state.email,
                 userid: user.id,
             };
-            this.handleFetchRequest(data);
+            const token = document.querySelector("[name=csrf-token]").content;
+            const url = "/api/v1/emails";
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "X-CSRF-Token": token,
+                    Accept: "application/json",
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }).then((result) => {
+                result.json().then((resp) => {
+                    if (resp) {
+                        swal(
+                            "Good job!",
+                            "Email is validated successfully",
+                            "success"
+                        );
+                        const email = this.state.email;
+                        let isPresent =
+                            this.props.emails.filter((i) => email == i.email)
+                                .length > 0
+                                ? true
+                                : false;
+                        if (!isPresent) {
+                            this.props.createEmailSuccess({ email });
+                        }
+                    } else {
+                        swal(
+                            "Oops!",
+                            "You must try with another email address",
+                            "error"
+                        );
+                    }
+                    this.setState({ email: "", errors: {}, isLoading: false });
+                });
+            });
         } else {
             this.setState({ isLoading: false });
         }
@@ -112,7 +94,7 @@ class EmailCreate extends Component {
         return (
             <div className="mb-3">
                 <h1 className="display-4 font-monda">Email Validator.</h1>
-                <div className="display-4 font-monda">Easy, Fast & Free.</div>
+                <div className="display-4 font-monda">Easy, Fast & Cheap.</div>
                 <p className="text-muted mt-3 mb-4">
                     Email Validator will clean your mailing list and increase
                     deliverability rate up to 99%. The email address validation

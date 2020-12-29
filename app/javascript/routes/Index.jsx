@@ -19,14 +19,21 @@ export default (
                         <Route path="/login" exact component={Login} />
                         <Route path="/register" exact component={Register} />
                         <Route path="/dashboard" exact component={Email} />
-                        <Route path="/admindashboard" exact component={AdminDashboard}/>
-                        <Route path="/createadmin" exact component={CreateAdmin}/>
+                        <Route
+                            path="/admindashboard"
+                            exact
+                            component={AdminDashboard}
+                        />
+                        <Route
+                            path="/createadmin"
+                            exact
+                            component={CreateAdmin}
+                        />
                         <Route component={Home} />
                     </Switch>
                 </div>
             </section>
         </div>
         <Footer />
-        
     </Router>
 );

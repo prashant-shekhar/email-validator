@@ -12,7 +12,10 @@ const Email = () => {
                     <EmailBulk />
                 </div>
                 <div className="col-sm-6 col-6">
-                    <img className="d-block w-100" src="/header_main-page.svg"></img>
+                    <img
+                        className="d-block w-100"
+                        src="/header_main-page.svg"
+                    ></img>
                     <EmailList />
                 </div>
             </div>

@@ -3,7 +3,7 @@ import { LOGIN, LOGOUT } from "./user.types";
 export const loginUser = (payload) => {
     return {
         type: LOGIN,
-        payload: payload
+        payload: payload,
     };
 };
 

@@ -13,8 +13,8 @@ describe("<EmailCreate /> rendering", () => {
     expect(wrapper.find("form")).toHaveLength(1);
   });
 
-  it("should render two <input> ", () => {
-    expect(wrapper.find("input")).toHaveLength(2);
+  it("should render one <input> ", () => {
+    expect(wrapper.find("input")).toHaveLength(1);
   });
 });
 
@@ -24,6 +24,5 @@ describe("<EmailCreate /> interactions", () => {
       .find("#emailinput")
       .simulate("change", { target: { value: "someone@gmail.com" } });
     expect(wrapper.state("email")).toEqual("someone@gmail.com");
-    expect(wrapper.state("file")).toEqual(null);
   });
 });

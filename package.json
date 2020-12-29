@@ -34,12 +34,11 @@
     "test": "jest"
   },
   "jest": {
+    "verbose": true,
     "testPathIgnorePatterns": [
         "/node_modules/",
-        "<rootDir>/config/webpack/test.js"
-      ],
-      "setupFilesAfterEnv": [
-        "./app/javascript/setupTests.js"
+        "<rootDir>/config/webpack/test.js",
+        "/vendor/"
       ]
   }
 

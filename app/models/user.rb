@@ -23,4 +23,13 @@ class User < ApplicationRecord
     def self.filter_users
       self.where(has_role: 'user').select(:id, :name, :username, :email, :is_activated).all
     end
+
+    def admin?
+      has_role?(:admin)
+    end
+    
+    def user?
+      has_role?(:user)
+    end 
+
 end

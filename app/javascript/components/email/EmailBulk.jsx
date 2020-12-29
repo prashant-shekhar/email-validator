@@ -22,7 +22,6 @@ class EmailBulk extends Component {
 
     handleClick() {
         this.setState({isUploading: true})
-        console.log('printed')
         const user = JSON.parse(localStorage.getItem("user"));
         const data = new FormData();
         data.append("file", this.state.file);
@@ -46,6 +45,13 @@ class EmailBulk extends Component {
                         "success"
                     );
                     this.setState({isUploadSuccess: true, downloadLink: resp.file_path.substring(35)})
+                }
+                else {
+                    swal(
+                        "Oops!",
+                        resp.message,
+                        "error"
+                    );
                 }
             });
         });

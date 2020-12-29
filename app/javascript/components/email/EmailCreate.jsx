@@ -20,23 +20,26 @@ class EmailCreate extends Component {
     componentDidUpdate(prevProps, prevState) {
         if (prevState.file !== this.state.file) {
             this.setState({ isUploading: true, isUploadSuccess: false });
+            const user = JSON.parse(localStorage.getItem("user"));
             const data = new FormData();
             data.append("file", this.state.file);
-            this.handleFetchRequest(data);
+            data.append("userid", user.id)
+            this.handleFetchRequest(data, true);
         }
     }
 
-    handleFetchRequest(data) {
+    handleFetchRequest(data, type = false) {
         const token = document.querySelector("[name=csrf-token]").content;
-        const url = "/api/v1/emails";
+        let url = "/api/v1/emails";
+        console.log(type)
+        if(type) url+="?type=csv"
+        console.log(url)
         fetch(url, {
             method: "POST",
             headers: {
                 "X-CSRF-Token": token,
-                Accept: "application/json",
-                "Content-type": "application/json",
             },
-            body: JSON.stringify(data),
+            body: data,
         }).then((result) => {
             this.setState({ isUploading: false });
             result.json().then((resp) => {
@@ -109,7 +112,7 @@ class EmailCreate extends Component {
         return (
             <div className="mb-3">
                 <h1 className="display-4 font-monda">Email Validator.</h1>
-                <div className="display-4 font-monda">Easy, Fast & Cheap.</div>
+                <div className="display-4 font-monda">Easy, Fast & Free.</div>
                 <p className="text-muted mt-3 mb-4">
                     Email Validator will clean your mailing list and increase
                     deliverability rate up to 99%. The email address validation
@@ -150,71 +153,6 @@ class EmailCreate extends Component {
                         </div>
                     </div>
                 </form>
-                <h4 className="font-monda mt-4 mb-3">
-                    Validate Multiple Emails
-                </h4>
-                <div className="row">
-                    <div className="col-8 mb-3">
-                        <div className="custom-file">
-                            <input
-                                type="file"
-                                className="custom-file-input form-control-lg"
-                                id="customFile"
-                                accept=".csv"
-                                onChange={(e) => {
-                                    this.setState({
-                                        file: e.target.files[0],
-                                    });
-                                }}
-                                disabled={
-                                    (this.props.user &&
-                                        !this.props.user.is_activated) ||
-                                    this.state.isUploading
-                                }
-                            />
-                            <label
-                                className="custom-file-label col-form-label-lg"
-                                htmlFor="customFile"
-                            >
-                                {this.state.file
-                                    ? this.state.file.name
-                                    : "Choose File"}
-                            </label>
-                        </div>
-                        <div className="mt-2">
-                            <span className="text-muted">
-                                Please upload only csv
-                            </span>
-                            <a href="#"> Sample.csv</a>
-                        </div>
-                    </div>
-                    <div className="col-4 mb-2">
-                        {this.state.isUploading && (
-                            <i className="ml-5 justify-content-center fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-                        )}
-                        {this.state.isUploadSuccess && (
-                            <a
-                                href="#"
-                                className="w-100 btn btn-lg btn-primary active"
-                                role="button"
-                                aria-pressed="true"
-                            >
-                                <i
-                                    className="fa fa-download"
-                                    aria-hidden="true"
-                                ></i>{" "}
-                                Download
-                            </a>
-                        )}
-                    </div>
-                </div>
-                {this.props.user && !this.props.user.is_activated && (
-                    <div className="mt-3 alert alert-dark" role="alert">
-                        Note: Please contact admin to unable this feature.
-                    </div>
-                )}
-                <br />
-                <br />
             </div>
         );
     }

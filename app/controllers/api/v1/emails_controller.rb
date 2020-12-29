@@ -13,7 +13,7 @@ class Api::V1::EmailsController < ApplicationController
       file_type = original_file.content_type
       file_name = original_file.original_filename
       if file_type == "text/csv"
-        user_id = params[:user_id]
+        user_id = params[:userid]
         rows = Email.read_csv(file)
         output_file_path = Email.to_csv(rows, user_id, file_name)
         render json: {error: false, file_path: output_file_path, message: 'File successfully validated'}

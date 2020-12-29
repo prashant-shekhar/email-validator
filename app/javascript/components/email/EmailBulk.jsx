@@ -100,7 +100,7 @@ class EmailBulk extends Component {
                             <span className="text-muted">
                                 Please upload only csv
                             </span>
-                            <a href="#"> Sample.csv</a>
+                            <a href="/Sample.csv"> Sample.csv</a>
                         </div>
                     </div>
                     <div className="col-4 mb-2">

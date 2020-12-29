@@ -1,20 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import {fetchUserSuccess} from '../../redux/Admin/admin.actions'
-import Stats from './Stats';
-import UserList from './UserList';
+import { fetchUserSuccess } from "../../redux/Admin/admin.actions";
+import Stats from "./Stats";
+import UserList from "./UserList";
 class AdminDashboard extends Component {
-   constructor(props){
-       super(props)
-   }
-   componentDidMount(){
+    constructor(props) {
+        super(props);
+    }
+    componentDidMount() {
         const user = JSON.parse(localStorage.getItem("user"));
-        const url =`/api/v1/users?user_id=${user.id}`;
+        const url = `/api/v1/users?user_id=${user.id}`;
         fetch(url)
             .then((result) => {
                 if (result.ok) {
                     result.json().then((response) => {
-                        this.props.fetchUserSuccess(response)
+                        this.props.fetchUserSuccess(response);
                     });
                 }
             })
@@ -26,10 +26,17 @@ class AdminDashboard extends Component {
     render() {
         return (
             <div className="col-10">
-                <Stats totalUsers={this.props.users.length} totalActivatedUsers={this.props.users.filter(user=>(user.is_activated===true)).length}/>
+                <Stats
+                    totalUsers={this.props.users.length}
+                    totalActivatedUsers={
+                        this.props.users.filter(
+                            (user) => user.is_activated === true
+                        ).length
+                    }
+                />
                 <UserList />
             </div>
-        )
+        );
     }
 }
 

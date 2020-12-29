@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import {userUpdateSuccess} from '../../redux/Admin/admin.actions'
+import { userUpdateSuccess } from "../../redux/Admin/admin.actions";
 class UserList extends Component {
-    constructor(props){
-        super(props)
-        this.handleActivate=this.handleActivate.bind(this)
+    constructor(props) {
+        super(props);
+        this.handleActivate = this.handleActivate.bind(this);
     }
 
-    handleActivate(index,currentUser){
-        if (confirm('Are you sure?')){
-            currentUser['is_activated']=!currentUser['is_activated'];
+    handleActivate(index, currentUser) {
+        if (confirm("Are you sure?")) {
+            currentUser["is_activated"] = !currentUser["is_activated"];
             const token = document.querySelector("[name=csrf-token]").content;
             const user = JSON.parse(localStorage.getItem("user"));
-            const admin_id=user.id;
+            const admin_id = user.id;
             const url = `/api/v1/users/${currentUser.id}`;
             const data = {
                 admin_id: admin_id,
-                is_activated: currentUser['is_activated'] ,
+                is_activated: currentUser["is_activated"],
             };
             fetch(url, {
                 method: "PUT",
@@ -29,34 +29,46 @@ class UserList extends Component {
             }).then((result) => {
                 result.json().then((resp) => {
                     if (resp.user) {
-                        const message= currentUser['is_activated']?`${resp.user.name} is authorized to Bulk Upload`:`${resp.user.name} permission is restricted for bulk upload`;
-                        swal("Accepted!",message,"success");
-                        let updatedUsers= this.props.users;
-                        updatedUsers[index]=currentUser; 
+                        const message = currentUser["is_activated"]
+                            ? `${resp.user.name} is authorized to Bulk Upload`
+                            : `${resp.user.name} permission is restricted for bulk upload`;
+                        swal("Accepted!", message, "success");
+                        let updatedUsers = this.props.users;
+                        updatedUsers[index] = currentUser;
                         this.props.userUpdateSuccess(updatedUsers);
                     } else {
-                        swal("Oops!",resp.errors[0],"error");
+                        swal("Oops!", resp.errors[0], "error");
                     }
                 });
-            });    
+            });
         }
     }
     render() {
         const users = this.props.users;
         const allUsers = users.map((user, index) => (
             <tr key={index}>
-                <th scope="row">{index+1}</th>
+                <th scope="row">{index + 1}</th>
                 <td>{user.name}</td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <td>
-                    <button className={"btn "+(user.is_activated?'btn-outline-danger':'btn-outline-success')} onClick={() => this.handleActivate(index,user)}>{user.is_activated?'Deactivate':'Activate'}</button>
+                    <button
+                        className={
+                            "btn " +
+                            (user.is_activated
+                                ? "btn-outline-danger"
+                                : "btn-outline-success")
+                        }
+                        onClick={() => this.handleActivate(index, user)}
+                    >
+                        {user.is_activated ? "Deactivate" : "Activate"}
+                    </button>
                 </td>
             </tr>
         ));
         return (
             <div className="content mt-4">
-                <h1>Users List</h1>  
+                <h1>Users List</h1>
                 <table className="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
@@ -70,10 +82,9 @@ class UserList extends Component {
                     <tbody>{allUsers}</tbody>
                 </table>
             </div>
-        )
+        );
     }
 }
-
 
 const mapStateToProps = (state) => {
     return {

@@ -34,11 +34,11 @@ class EmailList extends Component {
             <h6 className="m-3">No email yet. Why not create one</h6>
         );
         return (
-            <div>
-                <h4 className="font-monda mt-3 mb-3">
+            <div className="mt-3">
+                <h4 className="font-monda mt-3 mb-2">
                     Your's Validated Emails List
                 </h4>
-                <div className="card mt-3 mb-5 bg-white rounded-lg scrollable">
+                <div className="card mt-2 mb-5 bg-white rounded-lg scrollable">
                     <div className="card-header bg-primary text-white">
                         <span className="badge badge-light mr-2">
                             {emails.length}

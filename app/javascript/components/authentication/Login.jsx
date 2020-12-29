@@ -147,15 +147,13 @@ class Login extends Component {
                         </form>
                     </div>
                 </div>
-                {
-                this.props.isLoggedIn && this.props.user.has_role=='user' ? (
+                {this.props.isLoggedIn && this.props.user.has_role == "user" ? (
                     <Redirect to="/dashboard"></Redirect>
                 ) : null}
-                {
-                this.props.isLoggedIn && this.props.user.has_role=='admin' ? (
+                {this.props.isLoggedIn &&
+                this.props.user.has_role == "admin" ? (
                     <Redirect to="/admindashboard"></Redirect>
-                ) : null
-                }
+                ) : null}
             </div>
         );
     }

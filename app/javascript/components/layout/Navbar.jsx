@@ -11,17 +11,23 @@ const Navbar = () => {
         const history = useHistory();
         useEffect(() => {
             if (state.isLoggedIn) {
-                state.user.has_role=='admin'?history.push("/admindashboard"):history.push("/dashboard");
+                state.user.has_role == "admin"
+                    ? history.push("/admindashboard")
+                    : history.push("/dashboard");
             } else if (isUser) {
                 const user = JSON.parse(localStorage.getItem("user"));
-                dispatch(loginUser({ token: isUser, user: user, isLoggedIn: true }));
-                user.has_role=='admin'?history.push("/admindashboard"):history.push("/dashboard");
+                dispatch(
+                    loginUser({ token: isUser, user: user, isLoggedIn: true })
+                );
+                user.has_role == "admin"
+                    ? history.push("/admindashboard")
+                    : history.push("/dashboard");
             } else {
                 history.push("/");
             }
         }, []);
         if (state.isLoggedIn) {
-            if(state.user.has_role=='admin'){
+            if (state.user.has_role == "admin") {
                 return [
                     <li key="nav-home" className="nav-item mr-2">
                         <button className="btn btn-link text-white">
@@ -30,8 +36,8 @@ const Navbar = () => {
                     </li>,
                     <li key="nav-create-user" className="nav-item mr-2">
                         <Link className="nav-link" to="createadmin">
-                                 Create New Admin
-                         </Link>
+                            Create New Admin
+                        </Link>
                     </li>,
                     <li key="nav-logout" className="nav-item mr-2">
                         <button
@@ -46,7 +52,7 @@ const Navbar = () => {
                         </button>
                     </li>,
                 ];
-            }else{
+            } else {
                 return [
                     <li key="nav-home" className="nav-item mr-2">
                         <button className="btn btn-link text-white">
@@ -67,7 +73,6 @@ const Navbar = () => {
                     </li>,
                 ];
             }
-            
         } else {
             return [
                 <li key="nav-login" className="nav-item active">

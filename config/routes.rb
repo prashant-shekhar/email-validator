@@ -6,6 +6,6 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index, :update]
     end
   end
-  root 'home#index'
-  get '/*path' => 'home#index'
+  root "home#index"
+  get "/*path" => "home#index"
 end

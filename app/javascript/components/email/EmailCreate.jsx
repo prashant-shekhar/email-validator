@@ -92,9 +92,9 @@ class EmailCreate extends Component {
 
     render() {
         return (
-            <div className="mb-3">
+            <div className="mb-5 mt-5">
                 <h1 className="display-4 font-monda">Email Validator.</h1>
-                <div className="display-4 font-monda">Easy, Fast & Cheap.</div>
+                <div className="display-4 font-monda">Easy, Fast & Free.</div>
                 <p className="text-muted mt-3 mb-4">
                     Email Validator will clean your mailing list and increase
                     deliverability rate up to 99%. The email address validation

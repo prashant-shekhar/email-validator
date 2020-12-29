@@ -44,8 +44,9 @@ class Email < ApplicationRecord
     if !Dir.exists? output_file_dir
       Dir.mkdir(output_file_dir)
     end
-    output_file_path = "#{output_file_dir}/#{Time.now.to_s + file_name}"
+    new_file_name = Time.now.to_s + file_name
+    output_file_path = "#{output_file_dir}/#{new_file_name}"
     File.open(output_file_path, "w") { |file| file.write(content) }
-    return output_file_path
+    return "/report/#{new_file_name}"
   end
 end

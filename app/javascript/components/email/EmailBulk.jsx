@@ -50,7 +50,7 @@ class EmailBulk extends Component {
                     );
                     this.setState({
                         isUploadSuccess: true,
-                        downloadLink: resp.file_path.substring(35),
+                        downloadLink: resp.file_path,
                     });
                 } else {
                     swal("Oops!", resp.message, "error");

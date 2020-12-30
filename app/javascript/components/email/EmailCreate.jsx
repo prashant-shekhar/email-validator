@@ -108,6 +108,7 @@ class EmailCreate extends Component {
                             </label>
                             <input
                                 type="email"
+                                id="emailinput"
                                 className="form-control form-control-lg"
                                 onChange={(e) =>
                                     this.setState({ email: e.target.value })
@@ -154,3 +155,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmailCreate);
+
+export {EmailCreate}

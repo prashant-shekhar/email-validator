@@ -14,3 +14,4 @@ before_script:
 script:
   - bundle exec rake test
   - bundle exec rake test:system
+  - yarn test

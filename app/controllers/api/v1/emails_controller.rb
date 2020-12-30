@@ -14,8 +14,8 @@ class Api::V1::EmailsController < ApplicationController
       if file_type == "text/csv"
         user_id = params[:userid]
         rows = Email.read_csv(file)
-        output_file_path = Email.to_csv(rows, user_id, file_name)
-        render json: { error: false, file_path: output_file_path, message: "File successfully validated" }
+        ExportJob.perform_later(rows, user_id, file_name)
+        render json: { error: false, file_path: "/report", message: "File successfully validated" }
       else
         render json: { error: true, message: "File format not supported. Please upload CSV file." }, status: :not_acceptable
       end

@@ -37,11 +37,6 @@ class Login extends Component {
                     } else {
                         localStorage.setItem("jwt", JSON.stringify(resp.jwt));
                         localStorage.setItem("user", JSON.stringify(resp.user));
-                        swal(
-                            "Good job!",
-                            "You made it! Sign in successfull",
-                            "success"
-                        );
                         const payload = {
                             token: resp.jwt,
                             user: resp.user,

@@ -11,12 +11,11 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def check
+  def google_login
     access_token= params[:access_token]
-    email=params[:email]
     result = Net::HTTP.get(URI.parse("https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=#{access_token}"))
     result=JSON.parse(result)
-    if(result["email"]==email)
+    if(result["email"]==params[:email])
         user = User.find_by(email: params[:email])
         if user
           payload = { user_id: user.id }
@@ -24,7 +23,15 @@ class Api::V1::UsersController < ApplicationController
           copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
           render json: { error: false, user: copy_user, jwt: token }
         else
-          render json: {error: true, 'response':result}
+          user=User.create(name: params[:name],email: params[:email], password: params[:password], username: params[:username], has_role:'user', is_activated: false)
+          if user.valid?
+            payload = { user_id: user.id }
+            token = encode_token(payload)
+            copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
+            render json: {error:false, user: copy_user, jwt: token }
+          else
+            render json: {error: true, 'response':user.errors.full_messages}, status: :not_acceptable
+          end
         end
     else
       render json: { error: true, message: "You are not authorize person" }, status: :unauthorized
@@ -75,7 +82,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
-
   def user_params
     params.permit(:name, :username, :email, :password, :has_role, :is_activated)
   end

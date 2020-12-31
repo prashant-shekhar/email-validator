@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   before_create :encrypt_password
   validates :name, presence: true
-  validates :username, uniqueness: { case_sensitive: false }, presence: true, on: :create
+  validates :username, presence: true
+  validates :username, uniqueness: { case_sensitive: false },on: :create
   validates :email, uniqueness: { case_sensitive: false }, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true
   validates :has_role, presence: true

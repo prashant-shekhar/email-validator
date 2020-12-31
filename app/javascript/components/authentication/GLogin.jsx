@@ -7,7 +7,6 @@ const GLogin = (props) => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   const onSuccess = (res) => {
-    console.log(res);
     setShowSpinner(true);
     const email = res.profileObj.email;
     const password = res.profileObj.googleId;
@@ -31,7 +30,6 @@ const GLogin = (props) => {
       result.json().then((resp) => {
         setShowSpinner(false);
         if (!resp.error) {
-          console.log(resp);
           localStorage.setItem("jwt", JSON.stringify(resp.jwt));
           localStorage.setItem("user", JSON.stringify(resp.user));
           const payload = {
@@ -41,13 +39,13 @@ const GLogin = (props) => {
           };
           props.onSuccessfulLogin(payload);
         } else {
-          swal("Error!", "something went wrong, please try again", "failure");
+          swal("Error!", "something went wrong, please try again", "error");
         }
       });
     });
   };
   const onFailure = (res) => {
-    swal("Error!", "something went wrong, please try again", "failure");
+    swal("Error!", "something went wrong, please try again", "error");
   };
   return (
     <div className='text-center text-dark mb-4'>

@@ -14,6 +14,17 @@ class EmailBulk extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    componentWillMount(){
+        var pusher = new Pusher('6146ebbc681241f53074', {
+            cluster: 'ap2'
+          });
+
+          var channel = pusher.subscribe('my-channel');
+          channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+          });
+    }
+
     componentDidUpdate(prevProps, prevState) {
         if (prevState.file !== this.state.file) {
             this.setState({

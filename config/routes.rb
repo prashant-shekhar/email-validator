@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :emails, only: [:create, :index]
       post "users/login", to: "users#login"
+      post "users/check", to: "users#check"
       resources :users, only: [:create, :index, :update]
     end
   end

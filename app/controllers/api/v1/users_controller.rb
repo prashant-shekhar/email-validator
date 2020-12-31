@@ -1,9 +1,31 @@
+require 'net/http'
+require 'resolv-replace'
 class Api::V1::UsersController < ApplicationController
   def index
     user = User.find(params[:user_id])
     if user.has_role == "admin"
       users = User.filter_users
       render json: users
+    else
+      render json: { error: true, message: "You are not authorize person" }, status: :unauthorized
+    end
+  end
+
+  def check
+    access_token= params[:access_token]
+    email=params[:email]
+    result = Net::HTTP.get(URI.parse("https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=#{access_token}"))
+    result=JSON.parse(result)
+    if(result["email"]==email)
+        user = User.find_by(email: params[:email])
+        if user
+          payload = { user_id: user.id }
+          token = encode_token(payload)
+          copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
+          render json: { error: false, user: copy_user, jwt: token }
+        else
+          render json: {error: true, 'response':result}
+        end
     else
       render json: { error: true, message: "You are not authorize person" }, status: :unauthorized
     end

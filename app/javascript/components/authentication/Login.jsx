@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../redux/User/user.actions";
+import GLogin from "./GLogin";
 
 class Login extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class Login extends Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validate = this.validate.bind(this);
+        this.onSuccessfulGoogleLogin=this.onSuccessfulGoogleLogin.bind(this);
     }
 
     handleSubmit(e) {
@@ -68,6 +70,10 @@ class Login extends Component {
             errors: errors,
         });
         return isValid;
+    }
+
+    onSuccessfulGoogleLogin(payload){
+        this.props.loginUser(payload)
     }
     render() {
         return (
@@ -141,6 +147,7 @@ class Login extends Component {
                             </div>
                         </form>
                     </div>
+                    <GLogin onSuccessfulLogin={this.onSuccessfulGoogleLogin}/>
                 </div>
                 {this.props.isLoggedIn && this.props.user.has_role == "user" ? (
                     <Redirect to="/dashboard"></Redirect>

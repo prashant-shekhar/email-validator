@@ -21,11 +21,11 @@ class EmailCreate extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("user"));
+    const jwtToken = localStorage.getItem("jwl");
     this.setState({ isLoading: true });
     if (this.validate()) {
       const data = {
-        email: this.state.email,
-        userid: user.id,
+        email: this.state.email
       };
       const token = document.querySelector("[name=csrf-token]").content;
       const url = "/api/v1/emails";
@@ -35,6 +35,7 @@ class EmailCreate extends Component {
           "X-CSRF-Token": token,
           Accept: "application/json",
           "Content-type": "application/json",
+          Authorization: jwtToken
         },
         body: JSON.stringify(data),
       }).then((result) => {

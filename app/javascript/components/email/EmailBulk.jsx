@@ -43,10 +43,10 @@ class EmailBulk extends Component {
         this.setState({ isUploading: true });
         const user = JSON.parse(localStorage.getItem("user"));
         const data = new FormData();
-        data.append("file", this.state.file);
+        data.append("csv_file", this.state.file);
         data.append("userid", user.id);
         const token = document.querySelector("[name=csrf-token]").content;
-        let url = "/api/v1/emails?type=csv";
+        let url = "/api/v1/uploads?type=csv";
         fetch(url, {
             method: "POST",
             headers: {

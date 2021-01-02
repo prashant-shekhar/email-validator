@@ -3,9 +3,9 @@
 one:
   output_path: MyString
   processed: false
-  users: one
+  user: one
 
 two:
   output_path: MyString
   processed: false
-  users: two
+  user: two

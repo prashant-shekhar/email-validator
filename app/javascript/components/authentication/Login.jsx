@@ -23,7 +23,6 @@ class Login extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log(this.props);
         this.setState({ isLoading: true });
         const token = document.querySelector("[name=csrf-token]").content;
         if (this.validate()) {

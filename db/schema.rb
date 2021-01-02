@@ -41,15 +41,6 @@ ActiveRecord::Schema.define(version: 2021_01_02_113001) do
     t.index ["user_id"], name: "index_attachments_on_user_id"
   end
 
-  create_table "csvs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci", force: :cascade do |t|
-    t.string "output_path"
-    t.boolean "processed"
-    t.bigint "users_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["users_id"], name: "index_csvs_on_users_id"
-  end
-
   create_table "emails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci", force: :cascade do |t|
     t.string "email", null: false
     t.bigint "user_id", null: false

@@ -28,6 +28,8 @@ gem "jbuilder", "~> 2.7"
 #Truemail Gem to validate Email
 gem "truemail"
 
+gem "sidekiq"
+
 gem "pusher"
 gem "rails-assets-pusher", source: "https://rails-assets.org"
 

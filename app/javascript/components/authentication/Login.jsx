@@ -3,6 +3,8 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../redux/User/user.actions";
 import GLogin from "./GLogin";
+import FlashMessage from "../layout/FlashMessage";
+import {showSuccessAlert,showErrorAlert} from "../../redux/Alert/alert.actions"
 
 class Login extends Component {
     constructor(props) {
@@ -20,6 +22,7 @@ class Login extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        console.log(this.props);
         this.setState({ isLoading: true });
         const token = document.querySelector("[name=csrf-token]").content;
         if (this.validate()) {
@@ -33,10 +36,8 @@ class Login extends Component {
                 body: JSON.stringify(this.state),
             }).then((result) => {
                 this.setState({ isLoading: false });
-                result.json().then((resp) => {
-                    if (resp.error) {
-                        swal("Oops!", resp.message, "error");
-                    } else {
+                if(result.ok){
+                    result.json().then((resp)=>{
                         localStorage.setItem("jwt", JSON.stringify(resp.jwt));
                         localStorage.setItem("user", JSON.stringify(resp.user));
                         const payload = {
@@ -45,8 +46,17 @@ class Login extends Component {
                             isLoggedIn: true,
                         };
                         this.props.loginUser(payload);
-                    }
-                });
+                    })
+                }
+                else{
+                    result.json().then(resp=>{
+                        const payload={
+                            successAlert: false,
+                            errorAlert: true
+                        }
+                        this.props.showErrorAlert(payload)
+                    })
+                }
             });
         } else {
             this.setState({ isLoading: false });
@@ -72,12 +82,14 @@ class Login extends Component {
         return isValid;
     }
 
-    onSuccessfulGoogleLogin(payload){
+    onSuccessfulGoogleLogin(payload,payload1){
         this.props.loginUser(payload)
+        this.props.showSuccessAlert(payload1)
     }
     render() {
         return (
             <div className="Login container mt-5">
+                <FlashMessage />
                 <div className="card col-7 mx-auto my-auto">
                     <h2 className="card-title text-center mt-4">
                         Email Validator Login
@@ -166,12 +178,16 @@ const mapStateToProps = (state) => {
         token: state.user.token,
         user: state.user.user,
         isLoggedIn: state.user.isLoggedIn,
+        successAlert: state.alert.successAlert,
+        errorAlert: state.alert.errorAlert
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         loginUser: (payload) => dispatch(loginUser(payload)),
+        showSuccessAlert: (payload) => dispatch(showSuccessAlert(payload)),
+        showErrorAlert: (payload) => dispatch(showErrorAlert(payload))
     };
 };
 

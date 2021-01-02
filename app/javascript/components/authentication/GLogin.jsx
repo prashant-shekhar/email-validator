@@ -37,7 +37,11 @@ const GLogin = (props) => {
             user: resp.user,
             isLoggedIn: true,
           };
-          props.onSuccessfulLogin(payload);
+          const payload1={
+            successAlert:true,
+            errorAlert:false
+          }
+          props.onSuccessfulLogin(payload,payload1);
         } else {
           swal("Error!", "something went wrong, please try again", "error");
         }

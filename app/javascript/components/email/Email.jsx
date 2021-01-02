@@ -2,10 +2,12 @@ import React, { useEffect } from "react";
 import EmailCreate from "./EmailCreate";
 import EmailList from "./EmailList";
 import EmailBulk from "./EmailBulk";
+import FlashMessage from "../layout/FlashMessage";
 
 const Email = () => {
     return (
         <div className="container">
+                <FlashMessage />
             <div className="row">
                 <div className="col-sm-6 col-6">
                     <EmailCreate />

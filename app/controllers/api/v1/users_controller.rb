@@ -18,17 +18,11 @@ class Api::V1::UsersController < ApplicationController
     if(result["email"]==params[:email])
         user = User.find_by(email: params[:email])
         if user
-          payload = { user_id: user.id }
-          token = encode_token(payload)
-          copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
-          render json: { error: false, user: copy_user, jwt: token }
+          find_token(user)
         else
           user=User.create(name: params[:name],email: params[:email], password: params[:password], username: params[:username], has_role:'user', is_activated: false)
           if user.valid?
-            payload = { user_id: user.id }
-            token = encode_token(payload)
-            copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
-            render json: {error:false, user: copy_user, jwt: token }
+            find_token(user)
           else
             render json: {error: true, 'response':user.errors.full_messages}, status: :not_acceptable
           end
@@ -42,10 +36,7 @@ class Api::V1::UsersController < ApplicationController
     if Truemail.valid?(params[:email])
       user = User.create(user_params)
       if user.valid?
-        payload = { user_id: user.id }
-        token = encode_token(payload)
-        copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
-        render json: { user: copy_user, jwt: token }
+        find_token(user)
       else
         render json: { errors: user.errors.full_messages }, status: :not_acceptable
       end
@@ -57,10 +48,7 @@ class Api::V1::UsersController < ApplicationController
   def login
     user = User.find_by(email: params[:email])
     if user && User.authenticate(user.password, params[:password])
-      payload = { user_id: user.id }
-      token = encode_token(payload)
-      copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
-      render json: { error: false, user: copy_user, jwt: token }
+      find_token(user)
     else
       render json: { error: true, message: "Log in Failed! invalid email or password" }, status: :not_acceptable
     end
@@ -84,5 +72,12 @@ class Api::V1::UsersController < ApplicationController
   private
   def user_params
     params.permit(:name, :username, :email, :password, :has_role, :is_activated)
+  end
+
+  def find_token(user)
+    payload = { user_id: user.id }
+    token = encode_token(payload)
+    copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
+    render json: { error: false, user: copy_user, jwt: token }
   end
 end

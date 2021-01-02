@@ -55,7 +55,6 @@ class EmailBulk extends Component {
             body: data,
         }).then((result) => {
             result.json().then((resp) => {
-                console.log(resp);
                 if (!resp.error) {
                 } else {
                     swal("Oops!", resp.message, "error");

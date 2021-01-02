@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../../redux/User/user.actions";
 import GLogin from "./GLogin";
 import FlashMessage from "../layout/FlashMessage";
-import {showSuccessAlert,showErrorAlert} from "../../redux/Alert/alert.actions"
+import {showAlert,hideAlert} from "../../redux/Alert/alert.actions"
 
 class Login extends Component {
     constructor(props) {
@@ -18,6 +18,7 @@ class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validate = this.validate.bind(this);
         this.onSuccessfulGoogleLogin=this.onSuccessfulGoogleLogin.bind(this);
+        this.onFailureGoogleLogin=this.onFailureGoogleLogin.bind(this);
     }
 
     handleSubmit(e) {
@@ -45,16 +46,26 @@ class Login extends Component {
                             user: resp.user,
                             isLoggedIn: true,
                         };
+                        const payload1={
+                            successAlert: true,
+                            errorAlert: false,
+                            strongMessage: "Login Successful",
+                            message:"You are successfully logged in"
+                        }
                         this.props.loginUser(payload);
+                        this.props.showAlert(payload1);
                     })
                 }
                 else{
                     result.json().then(resp=>{
                         const payload={
                             successAlert: false,
-                            errorAlert: true
+                            errorAlert: true,
+                            strongMessage: "Error!",
+                            message:"Wrong username or password try again"
+
                         }
-                        this.props.showErrorAlert(payload)
+                        this.props.showAlert(payload)
                     })
                 }
             });
@@ -84,7 +95,11 @@ class Login extends Component {
 
     onSuccessfulGoogleLogin(payload,payload1){
         this.props.loginUser(payload)
-        this.props.showSuccessAlert(payload1)
+        this.props.showAlert(payload1)
+    }
+
+    onFailureGoogleLogin(payload){
+        this.props.showAlert(payload);
     }
     render() {
         return (
@@ -159,7 +174,7 @@ class Login extends Component {
                             </div>
                         </form>
                     </div>
-                    <GLogin onSuccessfulLogin={this.onSuccessfulGoogleLogin}/>
+                    <GLogin onSuccessfulLogin={this.onSuccessfulGoogleLogin} onFailureGoogleLogin={this.onFailureGoogleLogin}/>
                 </div>
                 {this.props.isLoggedIn && this.props.user.has_role == "user" ? (
                     <Redirect to="/dashboard"></Redirect>
@@ -178,16 +193,14 @@ const mapStateToProps = (state) => {
         token: state.user.token,
         user: state.user.user,
         isLoggedIn: state.user.isLoggedIn,
-        successAlert: state.alert.successAlert,
-        errorAlert: state.alert.errorAlert
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         loginUser: (payload) => dispatch(loginUser(payload)),
-        showSuccessAlert: (payload) => dispatch(showSuccessAlert(payload)),
-        showErrorAlert: (payload) => dispatch(showErrorAlert(payload))
+        showAlert: (payload) => dispatch(showAlert(payload)),
+        hideAlert: (payload) => dispatch(hideAlert(payload))
     };
 };
 

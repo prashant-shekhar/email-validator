@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchUserSuccess } from "../../redux/Admin/admin.actions";
+import FlashMessage from "../layout/FlashMessage";
 import Stats from "./Stats";
 import UserList from "./UserList";
 class AdminDashboard extends Component {
@@ -26,6 +27,7 @@ class AdminDashboard extends Component {
     render() {
         return (
             <div className="col-10">
+                <FlashMessage />
                 <Stats
                     totalUsers={this.props.users.length}
                     totalActivatedUsers={

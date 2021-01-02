@@ -1,15 +1,14 @@
-import { SHOW_SUCCESS_ALERT,SHOW_ERROR_ALERT } from "./alert.types";
+import { SHOW_ALERT,HIDE_ALERT } from "./alert.types";
 
-export const showSuccessAlert = (payload) => {
+export const showAlert = (payload) => {
     return {
-        type: SHOW_SUCCESS_ALERT,
+        type: SHOW_ALERT,
         payload: payload,
     };
 };
 
-export const showErrorAlert = (payload) => {
+export const hideAlert = (payload) => {
     return {
-        type: SHOW_ERROR_ALERT,
-        payload: payload,
+        type: HIDE_ALERT,
     };
 };

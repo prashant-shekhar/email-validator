@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchEmailSuccess } from "../../redux/Email/email.actions";
-import { showErrorAlert, showSuccessAlert} from "./../../redux/Alert/alert.actions";
 
 class EmailList extends Component {
     constructor(props) {
@@ -22,13 +21,6 @@ class EmailList extends Component {
             .catch((error) => {
                 console.log(error);
             });
-        setTimeout(
-            function() {
-                this.props.showSuccessAlert({ successAlert: false,errorAlert: false });
-            }
-            .bind(this),
-            5000
-        );
     }
 
     render() {
@@ -64,16 +56,13 @@ class EmailList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        emails: state.email.emails,
-        errorAlert: state.alert.errorAlert,
-        successalert: state.alert.successAlert,
+        emails: state.email.emails
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchEmailSuccess: (payload) => dispatch(fetchEmailSuccess(payload)),
-        showSuccessAlert: (payload) => dispatch(showSuccessAlert(payload))
+        fetchEmailSuccess: (payload) => dispatch(fetchEmailSuccess(payload))
     };
 };
 

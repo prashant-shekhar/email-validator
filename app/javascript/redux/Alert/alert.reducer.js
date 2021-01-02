@@ -1,26 +1,32 @@
 import {
-    SHOW_SUCCESS_ALERT,
-    SHOW_ERROR_ALERT
+    SHOW_ALERT,
+    HIDE_ALERT
 } from "./alert.types";
 
 const INITIAL_STATE = {
     successAlert: false,
-    errorAlert:false
+    errorAlert:false,
+    strongMessage:"",
+    message:""
 };
 
 const alertReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case SHOW_SUCCESS_ALERT:
+        case SHOW_ALERT:
             return {
                 ...state,
                 successAlert: action.payload.successAlert,
-                errorAlert: action.payload.errorAlert
+                errorAlert: action.payload.errorAlert,
+                strongMessage: action.payload.strongMessage,
+                message:action.payload.message
             };
-        case SHOW_ERROR_ALERT:
+        case HIDE_ALERT:
             return {
                 ...state,
-                successAlert: action.payload.successAlert,
-                errorAlert: action.payload.errorAlert
+                successAlert: false,
+                errorAlert: false,
+                strongMessage:"",
+                message:""
             };
         default:
             return state;

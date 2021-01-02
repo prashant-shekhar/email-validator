@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
     user = User.find(params[:user_id])
     if user.has_role == "admin"
       users = User.filter_users
-      render json: users
+      render json: users, status: :ok
     else
       render json: { error: true, message: "You are not authorize person" }, status: :unauthorized
     end
@@ -50,7 +50,7 @@ class Api::V1::UsersController < ApplicationController
     if user && User.authenticate(user.password, params[:password])
       find_token(user)
     else
-      render json: { error: true, message: "Log in Failed! invalid email or password" }, status: :not_acceptable
+      render json: { message: "Invalid username or password!"}, status: :not_acceptable
     end
   end
 
@@ -60,7 +60,7 @@ class Api::V1::UsersController < ApplicationController
       user = User.find(params[:id])
       if user.update(user_params)
         copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
-        render json: { user: copy_user, message: "user activated successfully" }
+        render json: { user: copy_user, message: "user activated successfully" }, status: :ok
       else
         render json: { errors: user.errors.full_messages }, status: :not_acceptable
       end
@@ -75,9 +75,12 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def find_token(user)
-    payload = { user_id: user.id }
+    payload = { user_id: user.id, user_role: user.has_role }
     token = encode_token(payload)
     copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
-    render json: { error: false, user: copy_user, jwt: token }
+    render json: { user: copy_user, jwt: token }, status: :ok
   end
 end
+
+
+# use keyword is_valid for response

@@ -8,11 +8,13 @@ const FlashMessage=()=> {
             dispatch(hideAlert());
     }
     useEffect(() => {
-        setTimeout(()=> {
-                dispatch(hideAlert());
-            },
-            5000
-        );
+        if(state.successAlert||state.errorAlert){
+            setTimeout(()=> {
+                    dispatch(hideAlert());
+                },
+                5000
+            );
+        }
     },[state.successAlert,state.errorAlert])
     if (state.errorAlert){
             return (

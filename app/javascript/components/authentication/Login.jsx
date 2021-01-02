@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../../redux/User/user.actions";
 import GLogin from "./GLogin";
 import FlashMessage from "../layout/FlashMessage";
-import {showAlert,hideAlert} from "../../redux/Alert/alert.actions"
+import {showAlert} from "../../redux/Alert/alert.actions"
 
 class Login extends Component {
     constructor(props) {
@@ -199,7 +199,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         loginUser: (payload) => dispatch(loginUser(payload)),
         showAlert: (payload) => dispatch(showAlert(payload)),
-        hideAlert: (payload) => dispatch(hideAlert(payload))
     };
 };
 

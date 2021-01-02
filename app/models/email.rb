@@ -18,7 +18,8 @@ class Email < ApplicationRecord
       csv << column_names
       rows.each do |row|
         values = row.values
-        additional_values_for_row = validate_email(values[0], user_id) ? ["Valid"] : ["Invalid"]
+        res = Truemail.validate(values[0])
+        additional_values_for_row = res.result.success ? ["Valid"] : ["Invalid"]
         values += additional_values_for_row
         csv << values
       end

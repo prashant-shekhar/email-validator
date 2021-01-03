@@ -62,6 +62,7 @@ class EmailBulk extends Component {
                 }).then((result) => {
                     result.json().then((resp) => {
                         if (resp.error) {
+                            this.setState({isUploading: false})
                             const payload={
                                 successAlert: false,
                                 errorAlert: true,

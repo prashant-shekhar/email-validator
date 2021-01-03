@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { userUpdateSuccess } from "../../redux/Admin/admin.actions";
+import {showAlert} from "./../../redux/Alert/alert.actions"
 class UserList extends Component {
     constructor(props) {
         super(props);
@@ -32,12 +33,24 @@ class UserList extends Component {
                         const message = currentUser["is_activated"]
                             ? `${resp.user.name} is authorized to Bulk Upload`
                             : `${resp.user.name} permission is restricted for bulk upload`;
-                        swal("Accepted!", message, "success");
+                        const payload={
+                            successAlert:true,
+                            errorAlert:false,
+                            strongMessage:"Success!",
+                            message:message,
+                        }
+                        this.props.showAlert(payload);
                         let updatedUsers = this.props.users;
                         updatedUsers[index] = currentUser;
                         this.props.userUpdateSuccess(updatedUsers);
                     } else {
-                        swal("Oops!", resp.errors[0], "error");
+                        const payload={
+                            successAlert:false,
+                            errorAlert:true,
+                            strongMessage:"Error!",
+                            message:resp.errors[0],
+                        }
+                        this.props.showAlert(payload);
                     }
                 });
             });
@@ -95,6 +108,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         userUpdateSuccess: (payload) => dispatch(userUpdateSuccess(payload)),
+        showAlert: (payload)=>dispatch(showAlert(payload)),
     };
 };
 

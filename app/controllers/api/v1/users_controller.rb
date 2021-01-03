@@ -18,11 +18,15 @@ class Api::V1::UsersController < ApplicationController
     if(result["email"]==params[:email])
         user = User.find_by(email: params[:email])
         if user
-          find_token(user)
+          token=find_token(user)
+          copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
+          render json: { user: copy_user, jwt: token }, status: :ok
         else
           user=User.create(name: params[:name],email: params[:email], password: params[:password], username: params[:username], has_role:'user', is_activated: false)
           if user.valid?
-            find_token(user)
+            token=find_token(user)
+            copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
+            render json: { user: copy_user, jwt: token }, status: :ok
           else
             render json: {error: true, 'response':user.errors.full_messages}, status: :not_acceptable
           end
@@ -36,7 +40,9 @@ class Api::V1::UsersController < ApplicationController
     if Truemail.valid?(params[:email])
       user = User.create(user_params)
       if user.valid?
-        find_token(user)
+        token=find_token(user)
+        copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
+        render json: { user: copy_user, jwt: token }, status: :ok
       else
         render json: { errors: user.errors.full_messages }, status: :not_acceptable
       end
@@ -48,7 +54,9 @@ class Api::V1::UsersController < ApplicationController
   def login
     user = User.find_by(email: params[:email])
     if user && User.authenticate(user.password, params[:password])
-      find_token(user)
+      token=find_token(user)
+      copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
+      render json: { user: copy_user, jwt: token }, status: :ok
     else
       render json: { message: "Invalid username or password!"}, status: :not_acceptable
     end
@@ -76,9 +84,7 @@ class Api::V1::UsersController < ApplicationController
 
   def find_token(user)
     payload = { user_id: user.id, user_role: user.has_role }
-    token = encode_token(payload)
-    copy_user = user.slice(:id, :name, :email, :username, :has_role, :is_activated)
-    render json: { user: copy_user, jwt: token }, status: :ok
+    encode_token(payload)
   end
 end
 

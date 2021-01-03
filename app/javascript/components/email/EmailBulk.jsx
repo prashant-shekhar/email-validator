@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createEmailSuccess } from "../../redux/Email/email.actions";
+import {showAlert} from "../../redux/Alert/alert.actions"
 
 class EmailBulk extends Component {
     constructor() {
@@ -61,7 +62,14 @@ class EmailBulk extends Component {
                 }).then((result) => {
                     result.json().then((resp) => {
                         if (resp.error) {
-                            swal("Oops!", resp.message, "error");
+                            const payload={
+                                successAlert: false,
+                                errorAlert: true,
+                                strongMessage: "Error!",
+                                message: resp.message
+    
+                            }
+                            this.props.showAlert(payload)
                         }
                     });
                 });
@@ -211,6 +219,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         createEmailSuccess: (payload) => dispatch(createEmailSuccess(payload)),
+        showAlert: (payload) => dispatch(showAlert(payload)),
     };
 };
 

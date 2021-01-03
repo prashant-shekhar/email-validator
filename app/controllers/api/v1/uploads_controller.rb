@@ -4,9 +4,7 @@ class Api::V1::UploadsController < ApplicationController
 
   def create
     original_file = params[:csv_file]
-    file = original_file.tempfile
     file_type = original_file.content_type
-    file_name = original_file.original_filename
     if file_type == "text/csv"
       user_id = params[:userid]
       attachment = Attachment.create(user_id: user_id, csv_file: original_file, processed: false)

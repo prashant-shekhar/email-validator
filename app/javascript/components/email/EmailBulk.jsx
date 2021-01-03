@@ -1,4 +1,3 @@
-import { Parser } from "papaparse";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createEmailSuccess } from "../../redux/Email/email.actions";
@@ -24,7 +23,6 @@ class EmailBulk extends Component {
         const user = JSON.parse(localStorage.getItem("user"));
         var channel = pusher.subscribe("my-channel");
         channel.bind(`my-event-${user.id}`, (response) => {
-            console.log(response);
             this.setState({
                 isUploading: false,
                 isUploadSuccess: true,
@@ -80,7 +78,6 @@ class EmailBulk extends Component {
             Papa.parse(this.state.file, {
                 header: true,
                 step: (row, parser) => {
-                    console.log(row.data);
                     if (!allKeyPresent) {
                         parser.pause();
                         let first_row_data = row.data;

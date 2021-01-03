@@ -25,7 +25,7 @@ class EmailList extends Component {
 
     render() {
         const emails = this.props.emails;
-        const allEmails = emails.slice(0, 20).map((emailEle, index) => (
+        const allEmails = emails.map((emailEle, index) => (
             <li key={index} className="list-group-item">
                 {emailEle.email}
             </li>

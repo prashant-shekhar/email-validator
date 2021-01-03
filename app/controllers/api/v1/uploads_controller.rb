@@ -1,5 +1,8 @@
 class Api::V1::UploadsController < ApplicationController
   def index
+    user = User.find(params[:userid])
+    attachments = user.attachments
+    render json: attachments
   end
 
   def create

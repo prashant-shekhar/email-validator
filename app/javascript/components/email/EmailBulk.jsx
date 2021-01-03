@@ -1,3 +1,4 @@
+import { Parser } from "papaparse";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createEmailSuccess } from "../../redux/Email/email.actions";
@@ -10,8 +11,10 @@ class EmailBulk extends Component {
             isUploading: false,
             isUploadSuccess: false,
             downloadLink: "#",
+            isError: false,
         };
         this.handleClick = this.handleClick.bind(this);
+        this.validateFile = this.validateFile.bind(this);
     }
 
     componentWillMount() {
@@ -21,7 +24,7 @@ class EmailBulk extends Component {
         const user = JSON.parse(localStorage.getItem("user"));
         var channel = pusher.subscribe("my-channel");
         channel.bind(`my-event-${user.id}`, (response) => {
-            console.log(response)
+            console.log(response);
             this.setState({
                 isUploading: false,
                 isUploadSuccess: true,
@@ -41,26 +44,60 @@ class EmailBulk extends Component {
     }
 
     handleClick() {
-        this.setState({ isUploading: true });
-        const user = JSON.parse(localStorage.getItem("user"));
-        const data = new FormData();
-        data.append("csv_file", this.state.file);
-        data.append("userid", user.id);
-        const token = document.querySelector("[name=csrf-token]").content;
-        let url = "/api/v1/uploads?type=csv";
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "X-CSRF-Token": token,
-            },
-            body: data,
-        }).then((result) => {
-            result.json().then((resp) => {
-                if (resp.error) {
-                    swal("Oops!", resp.message, "error");
-                }
+        this.setState({ isUploading: true, isError: false });
+        this.validateFile().then((response) => {
+            if (response) {
+                const user = JSON.parse(localStorage.getItem("user"));
+                const data = new FormData();
+                data.append("csv_file", this.state.file);
+                data.append("userid", user.id);
+                const token = document.querySelector("[name=csrf-token]")
+                    .content;
+                let url = "/api/v1/uploads?type=csv";
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-Token": token,
+                    },
+                    body: data,
+                }).then((result) => {
+                    result.json().then((resp) => {
+                        if (resp.error) {
+                            swal("Oops!", resp.message, "error");
+                        }
+                    });
+                });
+            } else {
+                this.setState({ isUploading: false, isError: true });
+            }
+        });
+    }
+
+    async validateFile() {
+        let allKeyPresent = false;
+        let Papa = require("papaparse/papaparse.min.js");
+        let promise = new Promise((resolve, reject) => {
+            Papa.parse(this.state.file, {
+                header: true,
+                step: (row, parser) => {
+                    console.log(row.data);
+                    if (!allKeyPresent) {
+                        parser.pause();
+                        let first_row_data = row.data;
+                        if (
+                            "Email" in first_row_data &&
+                            Object.keys(first_row_data).length == 1
+                        ) {
+                            allKeyPresent = true;
+                        }
+                    }
+                    parser.abort();
+                    resolve(allKeyPresent);
+                },
             });
         });
+        let result = await promise;
+        return result;
     }
 
     render() {
@@ -100,6 +137,23 @@ class EmailBulk extends Component {
                                     : "Choose File"}
                             </label>
                         </div>
+                        {this.state.isError && (
+                            <div className="mt-2">
+                                <div className="row ml-2">
+                                    <img
+                                        className="d-block"
+                                        src="/invalid.svg"
+                                    />
+                                    <strong className="ml-1">
+                                        Invalid File
+                                    </strong>
+                                </div>
+                                <span className="text-muted ml-2">
+                                    Please check file format. It should be same
+                                    as Sample.csv
+                                </span>
+                            </div>
+                        )}
                         <div className="mt-2">
                             <span className="text-muted">
                                 Please upload only csv

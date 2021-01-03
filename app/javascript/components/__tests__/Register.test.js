@@ -1,5 +1,5 @@
 import React from "react";
-import Register from "../authentication/Register";
+import {Register} from "../authentication/Register";
 import "../../setupTests";
 
 import { shallow } from "enzyme";
@@ -18,7 +18,7 @@ describe("<Register/> rendering", () => {
   });
 });
 
-describe("<Login /> interactions", () => {
+describe("<Register /> interactions", () => {
   it("should change state of email input", () => {
     wrapper
       .find('input[type="email"]')

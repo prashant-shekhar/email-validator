@@ -37,15 +37,33 @@ const GLogin = (props) => {
             user: resp.user,
             isLoggedIn: true,
           };
-          props.onSuccessfulLogin(payload);
+          const payload1={
+            successAlert:true,
+            errorAlert:false,
+            strongMessage: "Success!",
+            message:"You are successfully logged in"
+          }
+          props.onSuccessfulLogin(payload,payload1);
         } else {
-          swal("Error!", "something went wrong, please try again", "error");
+            const payload={
+              successAlert:false,
+              errorAlert:true,
+              strongMessage: "Error!",
+              message:"Something went wrong please try again!"
+            }
+          props.onFailureGoogleLogin(payload)
         }
       });
     });
   };
   const onFailure = (res) => {
-    swal("Error!", "something went wrong, please try again", "error");
+    const payload={
+      successAlert:false,
+      errorAlert:true,
+      strongMessage: "Error!",
+      message:"Something went wrong please try again!"
+    }
+    props.onFailureGoogleLogin(payload)
   };
   return (
     <div className='text-center text-dark mb-4'>

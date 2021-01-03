@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
-export default class Register extends Component {
+import { connect } from "react-redux";
+import {showAlert} from "../../redux/Alert/alert.actions"
+class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -42,14 +43,26 @@ export default class Register extends Component {
                             this.props.has_role == "admin"
                                 ? "New Admin Created Successfully"
                                 : "You made it! Registration successfull, please login now";
-                        swal("Good job!", message, "success");
+                            const payload={
+                                successAlert:true,
+                                errorAlert:false,
+                                strongMessage:"Success!",
+                                message:message
+                            }
+                        this.props.showAlert(payload);
                         this.props.has_role == "admin"
                             ? this.props.redirectToAdmin()
                             : this.props.history.push("/login");
                     });
                 } else {
                     result.json().then((resp) => {
-                        swal("Oops", resp.errors[0], "error");
+                            const payload={
+                                successAlert:false,
+                                errorAlert:true,
+                                strongMessage:"Error!",
+                                message:resp.errors[0]
+                            }
+                        this.props.showAlert(payload)
                     });
                 }
             });
@@ -224,3 +237,14 @@ export default class Register extends Component {
         );
     }
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showAlert: (payload) => dispatch(showAlert(payload))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Register)
+
+export {Register}

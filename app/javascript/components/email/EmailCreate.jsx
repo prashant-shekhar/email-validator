@@ -21,7 +21,7 @@ class EmailCreate extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("user"));
-    const jwtToken = localStorage.getItem("jwl");
+    const jwtToken = localStorage.getItem("jwt");
     this.setState({ isLoading: true });
     if (this.validate()) {
       const data = {

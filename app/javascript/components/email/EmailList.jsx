@@ -61,13 +61,13 @@ class EmailList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        emails: state.email.emails,
+        emails: state.email.emails
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchEmailSuccess: (payload) => dispatch(fetchEmailSuccess(payload)),
+        fetchEmailSuccess: (payload) => dispatch(fetchEmailSuccess(payload))
     };
 };
 

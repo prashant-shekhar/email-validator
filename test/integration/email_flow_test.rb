@@ -11,7 +11,9 @@ class EmailFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "creating an email" do
-    post "/api/v1/emails", params: { email: @email.email, userid: @email.user }
+    post "/api/v1/emails", params: { email: @email.email}, headers: {
+      Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMDE3OTkxNjl9.Xcse16JblkZDczoRfNuLqqdYC7Mi_hGgoQz6tVPMflQ'
+  } 
     assert_response :success
   end
 end

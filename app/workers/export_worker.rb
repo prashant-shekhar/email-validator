@@ -2,12 +2,15 @@ class ExportWorker
   include Sidekiq::Worker
   sidekiq_options retry: false
 
-  def perform(id, user_id, file_name)
-    file_object = Attachment.find_by(id: id)
-    rows = Email.read_csv(file_object.csv_file.download)
-    output_file_path = Email.to_csv(rows, user_id, file_name)
+  def perform(id)
+    attachment = Attachment.find_by(id: id)
+    user_id = attachment.user_id
+    file_name = attachment.csv_file.filename.to_s
+    rows = Email.read_csv(attachment.csv_file.download)
+    output_path = Email.to_csv(rows, user_id, file_name)
+    attachment.update(output_path: output_path, processed: true)
     Pusher.trigger("my-channel", "my-event-#{user_id.to_s}", {
-      message: output_file_path,
+      attachment: attachment,
     })
   end
 end

@@ -20,11 +20,12 @@ class EmailBulk extends Component {
         });
         const user = JSON.parse(localStorage.getItem("user"));
         var channel = pusher.subscribe("my-channel");
-        channel.bind(`my-event-${user.id}`, (data) => {
+        channel.bind(`my-event-${user.id}`, (response) => {
+            console.log(response)
             this.setState({
                 isUploading: false,
                 isUploadSuccess: true,
-                downloadLink: data.message,
+                downloadLink: response.attachment.output_path,
             });
         });
     }

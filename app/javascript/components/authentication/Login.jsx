@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../redux/User/user.actions";
 import GLogin from "./GLogin";
+import {showAlert} from "../../redux/Alert/alert.actions"
 
 class Login extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validate = this.validate.bind(this);
         this.onSuccessfulGoogleLogin=this.onSuccessfulGoogleLogin.bind(this);
+        this.onFailureGoogleLogin=this.onFailureGoogleLogin.bind(this);
     }
 
     handleSubmit(e) {
@@ -33,10 +35,8 @@ class Login extends Component {
                 body: JSON.stringify(this.state),
             }).then((result) => {
                 this.setState({ isLoading: false });
-                result.json().then((resp) => {
-                    if (resp.error) {
-                        swal("Oops!", resp.message, "error");
-                    } else {
+                if(result.ok){
+                    result.json().then((resp)=>{
                         localStorage.setItem("jwt", JSON.stringify(resp.jwt));
                         localStorage.setItem("user", JSON.stringify(resp.user));
                         const payload = {
@@ -44,9 +44,28 @@ class Login extends Component {
                             user: resp.user,
                             isLoggedIn: true,
                         };
+                        const payload1={
+                            successAlert: true,
+                            errorAlert: false,
+                            strongMessage: "Login Successful",
+                            message:"You are successfully logged in"
+                        }
                         this.props.loginUser(payload);
-                    }
-                });
+                        this.props.showAlert(payload1);
+                    })
+                }
+                else{
+                    result.json().then(resp=>{
+                        const payload={
+                            successAlert: false,
+                            errorAlert: true,
+                            strongMessage: "Error!",
+                            message:"Wrong username or password try again"
+
+                        }
+                        this.props.showAlert(payload)
+                    })
+                }
             });
         } else {
             this.setState({ isLoading: false });
@@ -72,8 +91,13 @@ class Login extends Component {
         return isValid;
     }
 
-    onSuccessfulGoogleLogin(payload){
+    onSuccessfulGoogleLogin(payload,payload1){
         this.props.loginUser(payload)
+        this.props.showAlert(payload1)
+    }
+
+    onFailureGoogleLogin(payload){
+        this.props.showAlert(payload);
     }
     render() {
         return (
@@ -147,7 +171,7 @@ class Login extends Component {
                             </div>
                         </form>
                     </div>
-                    <GLogin onSuccessfulLogin={this.onSuccessfulGoogleLogin}/>
+                    <GLogin onSuccessfulLogin={this.onSuccessfulGoogleLogin} onFailureGoogleLogin={this.onFailureGoogleLogin}/>
                 </div>
                 {this.props.isLoggedIn && this.props.user.has_role == "user" ? (
                     <Redirect to="/dashboard"></Redirect>
@@ -172,6 +196,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loginUser: (payload) => dispatch(loginUser(payload)),
+        showAlert: (payload) => dispatch(showAlert(payload)),
     };
 };
 

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import FlashMessage from "../layout/FlashMessage";
 import {showAlert} from "../../redux/Alert/alert.actions"
 class Register extends Component {
     constructor(props) {
@@ -107,7 +106,6 @@ class Register extends Component {
     render() {
         return (
             <div className="Login container mt-5">
-                <FlashMessage />
                 <div className="card col-7 mx-auto my-auto">
                     <h2 className="card-title text-center mt-4">
                         {this.props.has_role == "admin"

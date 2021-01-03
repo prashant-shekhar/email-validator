@@ -3,7 +3,6 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../redux/User/user.actions";
 import GLogin from "./GLogin";
-import FlashMessage from "../layout/FlashMessage";
 import {showAlert} from "../../redux/Alert/alert.actions"
 
 class Login extends Component {
@@ -103,7 +102,6 @@ class Login extends Component {
     render() {
         return (
             <div className="Login container mt-5">
-                <FlashMessage />
                 <div className="card col-7 mx-auto my-auto">
                     <h2 className="card-title text-center mt-4">
                         Email Validator Login

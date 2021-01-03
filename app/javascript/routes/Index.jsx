@@ -8,12 +8,16 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import AdminDashboard from "../components/admin/AdminDashboard";
 import CreateAdmin from "../components/admin/CreateAdmin";
+import FlashMessage from "../components/layout/FlashMessage";
 export default (
     <Router>
         <Header />
         <div>
             <section>
-                <div className="primary-color d-flex mt-5 align-items-center justify-content-center">
+                <div className="mt-3">
+                    <FlashMessage />
+                </div>
+                <div className="primary-color d-flex mt-3 align-items-center justify-content-center">
                     <Switch>
                         <Route path="/" exact component={Home} />
                         <Route path="/login" exact component={Login} />

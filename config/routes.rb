@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       post "users/login", to: "users#login"
       post "users/check", to: "users#google_login"
       resources :users, only: [:create, :index, :update]
+      resources :uploads, only: [:create, :index]
     end
   end
   root "home#index"

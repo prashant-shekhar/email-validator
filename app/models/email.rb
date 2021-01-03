@@ -4,7 +4,7 @@ class Email < ApplicationRecord
   validates :user_id, presence: true
 
   def self.read_csv(file)
-    rows = CSV.read(file, headers: true).collect do |row|
+    rows = CSV.parse(file, headers: true).collect do |row|
       row.to_hash
     end
     return rows

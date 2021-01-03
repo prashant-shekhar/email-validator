@@ -13,7 +13,7 @@ class Api::V1::EmailsControllerTest < ActionDispatch::IntegrationTest
   test "should create email" do
     post "/api/v1/emails", params: { email: @email.email}, headers: {
       Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMDE3OTkxNjl9.Xcse16JblkZDczoRfNuLqqdYC7Mi_hGgoQz6tVPMflQ'
-  } 
+  }
     assert_response :success
   end
 

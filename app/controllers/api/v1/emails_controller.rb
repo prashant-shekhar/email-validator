@@ -24,7 +24,6 @@ class Api::V1::EmailsController < ApplicationController
       render json: Email.validate_email(params[:email], @logged_in_user.id)
     end
 
-    render json: Email.validate_email(params[:email], params[:userid])
 
   end
     def require_login

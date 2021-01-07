@@ -2,7 +2,7 @@ require "test_helper"
 
 class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users :valid
+    @user = users :prashant
   end
 
   test "should create user" do

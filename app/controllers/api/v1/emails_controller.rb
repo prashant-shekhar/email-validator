@@ -1,11 +1,15 @@
 class Api::V1::EmailsController < ApplicationController
+  before_action :require_login
   def index
-    user = User.find(params[:userid])
-    emails = user.emails
+    emails = @logged_in_user.emails
     render json: emails
   end
 
   def create
-    render json: Email.validate_email(params[:email], params[:userid])
+    render json: Email.validate_email(params[:email], @logged_in_user.id)
+  end
+
+  def require_login
+    render json: { message: "Please Login First!" }, status: :unauthorized unless !!session_user
   end
 end

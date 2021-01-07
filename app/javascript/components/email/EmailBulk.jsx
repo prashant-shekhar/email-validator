@@ -46,6 +46,7 @@ class EmailBulk extends Component {
         this.setState({ isUploading: true, isError: false });
         this.validateFile().then((response) => {
             if (response) {
+                const jwtToken = localStorage.getItem("jwt")
                 const user = JSON.parse(localStorage.getItem("user"));
                 const data = new FormData();
                 data.append("csv_file", this.state.file);
@@ -57,6 +58,7 @@ class EmailBulk extends Component {
                     method: "POST",
                     headers: {
                         "X-CSRF-Token": token,
+                        Authorization: jwtToken,
                     },
                     body: data,
                 }).then((result) => {

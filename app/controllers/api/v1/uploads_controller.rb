@@ -11,7 +11,8 @@ class Api::V1::UploadsController < ApplicationController
     original_file = params[:csv_file]
     file_type = original_file.content_type
     if file_type == "text/csv"
-      user_id = @logged_in_user.id
+      user_id = params[:userid]
+      puts user_id
       attachment = Attachment.create(user_id: user_id, csv_file: original_file, processed: false)
       ExportWorker.perform_async(attachment.id)
       render json: { error: false, message: "Processing Your File.." }

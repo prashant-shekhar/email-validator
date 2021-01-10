@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createEmailSuccess } from "../../redux/Email/email.actions";
-import {showAlert} from "../../redux/Alert/alert.actions"
+import { createAttachmentSuccess } from "../../redux/Email/email.actions";
+import { showAlert } from "../../redux/Alert/alert.actions"
+
 
 class EmailBulk extends Component {
     constructor() {
@@ -29,6 +30,9 @@ class EmailBulk extends Component {
                 isUploadSuccess: true,
                 downloadLink: response.attachment.output_path,
             });
+            console.log(this.props)
+            let attachment = response.attachment;
+            this.props.createAttachmentSuccess({ attachment });
         });
     }
 
@@ -221,7 +225,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createEmailSuccess: (payload) => dispatch(createEmailSuccess(payload)),
+        createAttachmentSuccess: (payload) => dispatch(createAttachmentSuccess(payload)),
         showAlert: (payload) => dispatch(showAlert(payload)),
     };
 };

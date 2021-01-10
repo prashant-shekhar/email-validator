@@ -1,5 +1,6 @@
 import {
     FETCH_ATTACHMENT_SUCCESS,
+    CREATE_ATTACHMENT_SUCCESS
 } from "./attachment.types";
 
 const INITIAL_STATE = {
@@ -12,6 +13,11 @@ const attachmentReducer = (state = INITIAL_STATE, action) => {
             return {
                 attachments: action.payload,
             };
+        
+            case CREATE_ATTACHMENT_SUCCESS:
+                return {
+                    attachments: [action.payload, ...state.attachments],
+                };
         default:
             return state;
     }

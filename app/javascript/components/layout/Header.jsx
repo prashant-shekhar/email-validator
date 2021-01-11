@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 
 export default () => (
-    <nav className="navbar navbar-dark navbar-expand-md footer">
+    <nav className="navbar navbar-dark navbar-expand-sm footer">
         <Link to="/" className="navbar-brand logo">
             Email Validator
         </Link>

@@ -2,7 +2,7 @@ import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 
 export default () => (
-    <div className="mt-5 pt-5 pb-5 footer">
+    <div className="mt-0 pt-5 pb-1 footer">
         <div className="container">
             <div className="row">
                 <div className="col-lg-5 col-xs-12 about-company">

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchAttachmentSuccess } from "../../redux/Attachment/attachment.actions";
+import TableScrollbar from 'react-table-scrollbar';
 
 class EmailBulkList extends Component {
     constructor(props) {
@@ -46,19 +47,19 @@ class EmailBulkList extends Component {
                     Your's Validated CSV List
                 </h4>
                 {attachments.length ? (
-                    <div className="table-responsive">
+                    <div className="list-group list-group-flush scrollable">
                         <table className="table table-striped">
                             <thead>
-                                <tr>
+                                <tr >
                                     <th scope="col">#</th>
                                     <th scope="col">File</th>
                                     <th scope="col">Download</th>
                                     <th scope="col">Added</th>
                                 </tr>
                             </thead>
-                            <tbody>{allAttachments}</tbody>
+                        <tbody className="overflow-auto">{allAttachments}</tbody>
                         </table>
-                    </div>
+                        </div>
                 ) : (
                     <h6 className="m-3">
                         Email List is empty. Why not upload one?

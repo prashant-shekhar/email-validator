@@ -111,6 +111,12 @@ class EmailBulk extends Component {
         let result = await promise;
         return result;
     }
+    downloadhandleclick = () => {
+        this.setState({
+            isUploading: false,
+            isUploadSuccess: false,
+        });
+    }
 
     render() {
         return (
@@ -190,6 +196,7 @@ class EmailBulk extends Component {
                         )}
                         {this.state.isUploadSuccess && (
                             <a
+                                onClick = {this.downloadhandleclick}
                                 href={this.state.downloadLink}
                                 className="w-100 btn btn-lg btn-primary active"
                                 role="button"

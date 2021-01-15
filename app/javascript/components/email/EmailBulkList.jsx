@@ -46,6 +46,7 @@ class EmailBulkList extends Component {
                     Your's Validated CSV List
                 </h4>
                 {attachments.length ? (
+                    <div className="list-group list-group-flush scrollable">
                     <div className="table-responsive">
                         <table className="table table-striped">
                             <thead>
@@ -58,7 +59,8 @@ class EmailBulkList extends Component {
                             </thead>
                             <tbody>{allAttachments}</tbody>
                         </table>
-                    </div>
+                        </div>
+                        </div>
                 ) : (
                     <h6 className="m-3">
                         Email List is empty. Why not upload one?

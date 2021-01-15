@@ -9,8 +9,13 @@ class EmailList extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem("user"));
-        const url = `/api/v1/emails?userid=${user.id}`;
-        fetch(url)
+        const token = localStorage.getItem("jwt");
+        const url = `/api/v1/emails`;
+        fetch(url, {
+            headers: {
+                Authorization:token
+            }
+        })
             .then((result) => {
                 if (result.ok) {
                     result.json().then((response) => {
@@ -25,7 +30,7 @@ class EmailList extends Component {
 
     render() {
         const emails = this.props.emails;
-        const allEmails = emails.slice(0, 20).map((emailEle, index) => (
+        const allEmails = emails.map((emailEle, index) => (
             <li key={index} className="list-group-item">
                 {emailEle.email}
             </li>

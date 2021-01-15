@@ -9,10 +9,11 @@ import Footer from "../components/layout/Footer";
 import AdminDashboard from "../components/admin/AdminDashboard";
 import CreateAdmin from "../components/admin/CreateAdmin";
 import FlashMessage from "../components/layout/FlashMessage";
+import "./style.css"
 export default (
     <Router>
         <Header />
-        <div>
+        <div className="background">
             <section>
                 <div className="mt-3">
                     <FlashMessage />

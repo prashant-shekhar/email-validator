@@ -46,6 +46,7 @@ class EmailBulk extends Component {
         this.setState({ isUploading: true, isError: false });
         this.validateFile().then((response) => {
             if (response) {
+                const jwtToken = localStorage.getItem("jwt")
                 const user = JSON.parse(localStorage.getItem("user"));
                 const data = new FormData();
                 data.append("csv_file", this.state.file);
@@ -57,6 +58,7 @@ class EmailBulk extends Component {
                     method: "POST",
                     headers: {
                         "X-CSRF-Token": token,
+                        Authorization: jwtToken,
                     },
                     body: data,
                 }).then((result) => {
@@ -104,6 +106,13 @@ class EmailBulk extends Component {
         });
         let result = await promise;
         return result;
+    }
+
+    downloadhandleclick = () => {
+        this.setState({
+            isUploading: false,
+            isUploadSuccess: false,
+        });
     }
 
     render() {
@@ -184,6 +193,7 @@ class EmailBulk extends Component {
                         )}
                         {this.state.isUploadSuccess && (
                             <a
+                                onClick = {this.downloadhandleclick}
                                 href={this.state.downloadLink}
                                 className="w-100 btn btn-lg btn-primary active"
                                 role="button"

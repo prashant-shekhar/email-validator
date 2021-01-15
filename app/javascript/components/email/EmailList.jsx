@@ -9,8 +9,13 @@ class EmailList extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem("user"));
-        const url = `/api/v1/emails?userid=${user.id}`;
-        fetch(url)
+        const token = localStorage.getItem("jwt");
+        const url = `/api/v1/emails`;
+        fetch(url, {
+            headers: {
+                Authorization:token
+            }
+        })
             .then((result) => {
                 if (result.ok) {
                     result.json().then((response) => {

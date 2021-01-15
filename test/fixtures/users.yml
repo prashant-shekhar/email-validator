@@ -15,3 +15,10 @@ admin:
   password: admin_password
   has_role: admin
   is_activated: true
+
+prashant:
+  name: Prashant
+  username: prashantshekhar
+  email: prashant.shekhar@elitmus.com
+  password: $2a$12$r/Ll6ub8BE8begKkq4HqxeCzdotgfMd2Fgrn6MUhon12tfqs9K/WG
+  has_role: user

@@ -1,5 +1,10 @@
 class Api::V1::UploadsController < ApplicationController
   def index
+    user = User.find(params[:userid])
+    attachments = user.attachments
+    render json: attachments.map { |attachment|
+      attachment.as_json.merge({ file_name: attachment.csv_file.filename.to_s })
+    }
   end
 
   def create

@@ -2,6 +2,8 @@ class Api::V1::EmailsController < ApplicationController
   before_action :require_login
   def index
     emails = @logged_in_user.emails
+
+    render json: emails
   end
 
   def create
